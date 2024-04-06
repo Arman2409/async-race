@@ -1,0 +1,10 @@
+@import "../../common/variables.scss";
+
+.lights {
+   width: calc(50% -  $logo_width / 2);
+}
+
+:export {
+   red_main: $red_main;
+   blue_main: $blue_main;
+}

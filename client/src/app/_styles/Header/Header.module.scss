@@ -1,0 +1,15 @@
+@import "../common/variables.scss";
+
+.header {
+    width: 100%;
+    height: 125px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+
+    &__logo {
+        height: 100%;
+        width: $logo_width;
+    }
+}
