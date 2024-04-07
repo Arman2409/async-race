@@ -1,0 +1,25 @@
+@import "../common/variables.scss";
+
+.winners {
+    width: 80%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto;
+
+    &__title {
+        margin-bottom: 10px;
+        color: $orange_main;
+        font-size: 35px;
+        padding: 5px;
+        border-radius: 15px;
+        text-shadow: 0 -1px 4px $grey_main, 0 -10px 20px $orange_main, 0 -18px 40px $orange_main, 2px 2px 2px $black_main;
+        text-shadow:
+            0 -2px 8px $grey_main,
+            -2px -2px 20px $orange_main,
+            2px -2px 20px $orange_main,
+            0 2px 20px $black_main;
+    }
+}

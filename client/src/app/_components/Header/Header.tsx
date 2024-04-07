@@ -5,11 +5,11 @@ import Lights from "./components/Lights/Lights";
 const Header = () => (
     <div
         className={styles.header}>
-        <Lights key="left-lights" />
+        <Lights key="left" />
         <img
             className={styles.header__logo}
             src="./logo.png" />
-        <Lights key="right-lights" lightsTop={true} />
+        <Lights key="right" />
     </div>
 )
 

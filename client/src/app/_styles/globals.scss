@@ -1,9 +1,12 @@
 @import "./common/variables.scss";
 
 body {
-  margin: 0;
+  min-height: calc(100vh - 200px);
+  margin: 170px 0 0 0;
   padding: 0;
-  background-color: $grey_main;
+  overflow: hidden;
+  background: url("/background.jpg");
+  background-size: 100% 100%;
 }
 
 h1, h2 ,h3 ,h4 ,h5 ,h6 ,p {

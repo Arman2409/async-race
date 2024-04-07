@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 
 import styles from "../../../../_styles/Header/components/Lights.module.scss";
-import type { LightsProps, Light } from "../../../../_types/header";
+import type { Light } from "../../../../_types/header";
 
-const Lights = ({ lightsTop }: LightsProps) => {
+const Lights = () => {
     const lightsDrawn = useRef<boolean>(false);
     const canvasRef = useRef<any>(null);
     const canvasContRef = useRef<any>(null);
@@ -17,29 +17,27 @@ const Lights = ({ lightsTop }: LightsProps) => {
 
         const ctx = canvasRef.current.getContext('2d');
         const lightRadius = 5; // Radius of each light
-        const numLights = (canvasRef.current.width - lightRadius * 4) / (lightRadius * 4); // Number of lights
-        let currentX = 0; // Margin between lights and logo
-        const lightsY = lightsTop ? 0 + lightRadius * 2
-            : canvasRef.current.height - lightRadius * 2;
+        const numLights = Math.floor((canvasRef.current.width - lightRadius * 4) / (lightRadius * 4)); // Number of lights
+        let currentX = 0;
+        const lightsY = canvasRef.current.height * 0.5;
 
         let lights: Light[] = [];
 
         const initLights = () => {
             for (let i = 0; i < numLights; i++) {
                 const x = currentX += 20;
-                const y = lightsY;
 
                 lights.push({
                     x,
-                    y,
-                    isOn: false,
+                    y: lightsY,
+                    color: "red",
                 });
             }
         }
 
         const updateLights = () => {
             for (const light of lights) {
-                light.isOn = !light.isOn;
+                light.color = light.color === "red" ? "blue" : "red";
             }
         }
 
@@ -55,7 +53,7 @@ const Lights = ({ lightsTop }: LightsProps) => {
                 // Draw box shadow for depth
                 ctx.shadowColor = styles.black_main;
                 ctx.shadowBlur = lightRadius;
-                ctx.fillStyle = light.isOn ? styles.red_main : styles.blue_main;
+                ctx.fillStyle = light.color === "red" ? styles.red_main : styles.blue_main;
                 ctx.fill();
 
                 // Reset shadow properties for next light
