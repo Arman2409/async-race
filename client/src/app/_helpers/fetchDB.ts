@@ -17,3 +17,14 @@ export const getTableData = async (
       console.error(message || "Error occured");
    })
 }
+
+
+export const getWinnerName = async (
+   id: string
+) => {
+   return axios.get(`http://localhost:4000/garage/${id}`).then(({ data }) => {
+      return data?.name;
+   }).catch(({ message }) => {
+      console.error(message || "Error occured");
+   })
+}
