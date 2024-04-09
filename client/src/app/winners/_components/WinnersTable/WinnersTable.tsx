@@ -3,12 +3,13 @@ import { FaTrophy } from "react-icons/fa6";
 
 import styles from "../../../_styles/Winners/components/WinnersTable.module.scss";
 import { getTableData, getWinnerName } from "../../../_helpers/fetchDB";
-import Pagination from "../../../_components/shared/Pagination/Pagination";
 
-const WinnersTable = () => {
-    const [winnersData, setWinnersData] = useState<any[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-
+const WinnersTable = ({currentPage, winnersData, setWinnersData}:{
+    currentPage: number,
+    winnersData: any[],
+    setWinnersData: Function
+}) => {
+    
     const getWinners = useCallback((async () => {
         let data = await getTableData("winners", currentPage);
         data = await Promise.all(data.map(async (winner: any) => {
@@ -27,7 +28,7 @@ const WinnersTable = () => {
 
     useEffect(() => {
         getWinners();
-    }, [getWinners])
+    }, [getWinners, currentPage])
 
     return (
         <div className={styles.winners_table_cont}>
@@ -59,13 +60,6 @@ const WinnersTable = () => {
                     )}
                 </tbody>
             </table>
-            <Pagination
-                current={currentPage}
-                setCurrent={setCurrentPage}
-                opacity={0.85}
-                itemsCount={winnersData.length}
-                perPage={8}
-            />
         </div>
     )
 }

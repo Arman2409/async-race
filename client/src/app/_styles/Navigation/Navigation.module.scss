@@ -1,85 +1,27 @@
 @import "../common/variables.scss";
+@import "../common/classes.scss";
 
 .navigation {
+    @extend .flex_center;
+
     width: 100%;
     height: 40px;
     position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     top: $header_height;
 
-    &__button {
-        width: 120px;
-        height: 30px;
-        margin-right: 10px;
-        transition: 0.5s;
-        font-size: 18px;
-        border: none;
-        outline: none;
+    &__page_title {
+        margin-bottom: 10px;
         color: $orange_main;
-        cursor: pointer;
-        position: relative;
-        z-index: 0;
-        border-radius: 10px;
-
-        // container for getting the gradient border effect
-        &:before {
-            content: "";
-            background: linear-gradient(45deg,
-                    $blue_main,
-                    $red_main,
-                    $grey_main);
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            background-size: 400%;
-            z-index: -1;
-            filter: blur(5px);
-            -webkit-filter: blur(5px);
-            width: calc(100% + 4px);
-            height: calc(100% + 4px);
-            transition: opacity 0.3s ease-in-out;
-            border-radius: 10px;
-        }
-
-        // central container of the button with black background 
-        &:after {
-            z-index: -1;
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: $black_main;
-            left: 0;
-            top: 0;
-            border-radius: 10px;
-        }
-
-        &:hover {
-            font-size: 22px;
-
-            @keyframes glowing-button-85 {
-                0% {
-                    background-position: 0 0;
-                }
-    
-                50% {
-                    background-position: 400% 0;
-                }
-    
-                100% {
-                    background-position: 0 0;
-                }
-            }
-
-            &:before {
-                animation: glowing-button-85 10s linear infinite;
-            }
-        }
-
-        &--active {
-            color: $red_main;
-        }
+        font-size: 35px;
+        padding: 5px;
+        border-radius: 15px;
+        position: absolute;
+        left: 10%;
+        text-shadow: 0 -1px 4px $grey_main, 0 -10px 20px $orange_main, 0 -18px 40px $orange_main, 2px 2px 2px $black_main;
+        text-shadow:
+            0 -2px 8px $grey_main,
+            -2px -2px 20px $orange_main,
+            2px -2px 20px $orange_main,
+            0 2px 20px $black_main;
     }
 }

@@ -1,4 +1,9 @@
 @import "./common/variables.scss";
+@import "./common/classes.scss";
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   min-height: calc(100vh - 170px);

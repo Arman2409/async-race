@@ -1,22 +1,40 @@
 "use client"
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+
 import styles from "../../_styles/Navigation/Navigation.module.scss";
+import Button from "../shared/Button/Button";
 
-const Navigation = ()  => {
-    const router = useRouter();
+const Navigation = () => {
+  const [active, setActive] = useState<"Garage" | "Winners">();
+  const router = useRouter();
+  const pathname = usePathname();
 
-    return (
-        <div className={styles.navigation}>
-           <button 
-           onClick={() => router.push("/winners")}
-           className={styles.navigation__button}>
-             Winners
-           </button>
-           <button className={styles.navigation__button}>
-             Garage
-           </button>
-        </div>
-    )
+  const changePage = useCallback((page: "garage" | "winners") => {
+    router.push(page === "garage" ? "/" : "/winners");
+  }, [router]);
+
+  useEffect(() => {
+    setActive(pathname === "/" ? "Garage" : "Winners");
+  }, [pathname, setActive])
+
+  return (
+    <div className={styles.navigation}>
+      <h2 className={styles.navigation__page_title}>
+        {active}
+      </h2>
+      <Button
+        onClick={() => changePage("winners")}
+        isActive={active === "Winners"}
+        text="Winners"
+      />
+      <Button
+        onClick={() => changePage("garage")}
+        isActive={active === "Garage"}
+        text="Garage"
+      />
+    </div>
+  )
 }
 
 export default Navigation;

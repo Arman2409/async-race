@@ -7,20 +7,19 @@
     &__table {
         width: 100%;
         height: auto;
-        opacity: 0.85;
         border-collapse: collapse;
 
         &__row {
             &_1 {
-                background-color: $blue_light;
+                background-color: rgba($blue_light, 0.85);
             }
     
             &_2 {
-                background-color: $red_main;
+                background-color: rgba($red_main, 0.85);
             }
     
             &_3 {
-                background-color: $grey_main;
+                background-color: rgba($grey_main, 0.85);
             }
         }
 

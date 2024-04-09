@@ -1,9 +1,13 @@
-import styles from "./page.module.css";
+import styles from "./_styles/Garage/Garage.module.scss";
+import ActionsInput from "./garage/components/ActionsInput/ActionsInput";
+import GarageItems from "./garage/components/GarageItems/GarageItems";
 
 const Garage = () => {
   return (
-    <main>
-    </main>
+    <div className={styles.garage}>
+      <ActionsInput />
+      <GarageItems />
+    </div>
   );
 }
 
