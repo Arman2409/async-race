@@ -6,13 +6,15 @@ const Button = (
         isActive,
         onClick,
         type,
+        disabled,
         text }: ButtonProps) => {
     const mainClass = isActive ? styles.button__active : type ?  styles[`button__${type}`] : styles.button;
 
     return (
         <button
-            onClick={() => onClick()}
-            className={mainClass}>
+            onClick={disabled ? () => {} : () => onClick()}
+            className={`${mainClass} ${disabled ? styles.button__disabled : ""}`}
+            >
             {text}
         </button>
     )
