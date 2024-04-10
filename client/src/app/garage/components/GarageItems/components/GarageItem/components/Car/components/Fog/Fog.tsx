@@ -4,14 +4,15 @@ import styles from "../../../../../../../../../_styles/Garage/components/GarageI
 import { getAllVariants } from "./utils/functions";
 import type { FogProps } from "../../../../../../../../../_types/garage";
 
-const Fog = ({ zIndex, show }: FogProps) => {
+const Fog = ({ zIndex, show, extraStyles }: FogProps & any) => {
   const fogVariants = getAllVariants();
 
   return (
     <div
       className={styles.fogs}
       style={{
-        zIndex
+        ...extraStyles || {},
+        zIndex,
       }} >
       {show && fogVariants.map((variants, index) => (
         <motion.div
