@@ -2,22 +2,26 @@ import { useCallback, useEffect, useState } from "react";
 import { FaTrophy } from "react-icons/fa6";
 
 import styles from "../../../_styles/Winners/components/WinnersTable.module.scss";
-import { getTableData, getWinnerName } from "../../../_helpers/fetchDB";
-import Pagination from "../../../_components/shared/Pagination/Pagination";
+import getTableData from "../../../_requests/getTableData";
+import getWinnerDetails from "../../../_requests/getWinnerDetails";
+import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
 
-const WinnersTable = () => {
-    const [winnersData, setWinnersData] = useState<any[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>(1);
+const WinnersTable = ({ currentPage, winnersData, setWinnersData }: {
+    currentPage: number,
+    winnersData: any[],
+    setWinnersData: Function
+}) => {
 
     const getWinners = useCallback((async () => {
         let data = await getTableData("winners", currentPage);
         data = await Promise.all(data.map(async (winner: any) => {
-            if (!winner?.name) {
-                const winnerName = await getWinnerName(winner?.id);
-                console.log({ winnerName })
+            if (!winner?.name || !winner?.color) {
+                const winnerDetails = await getWinnerDetails(winner?.id);
+                const { name = "...Deleted...", color = "" } = { ...winnerDetails || {} };
                 return {
                     ...winner,
-                    name: winnerName
+                    name,
+                    color
                 }
             }
             return winner;
@@ -27,7 +31,7 @@ const WinnersTable = () => {
 
     useEffect(() => {
         getWinners();
-    }, [getWinners])
+    }, [getWinners, currentPage])
 
     return (
         <div className={styles.winners_table_cont}>
@@ -35,13 +39,14 @@ const WinnersTable = () => {
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Car</th>
                         <th>Car Name</th>
                         <th>Wins</th>
                         <th>Best Time</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {winnersData.map(({ id, name, wins, time }, index) => (
+                    {winnersData.map(({ id, name, color, wins, time }, index) => (
                         <tr
                             key={id}
                             className={styles[`winners_table_cont__table__row_${index % 3 + 1}`]}>
@@ -52,6 +57,7 @@ const WinnersTable = () => {
                                     && <FaTrophy className={styles[`winners_table_cont__table__trophy_${index + 1}`]} />}
                                 {id || "N/n"}
                             </td>
+                            <td><CarIcon color={color} /> </td>
                             <td>{name || "N/n"}</td>
                             <td>{wins || "N/n"}</td>
                             <td>{time || "N/n"}</td>
@@ -59,13 +65,6 @@ const WinnersTable = () => {
                     )}
                 </tbody>
             </table>
-            <Pagination
-                current={currentPage}
-                setCurrent={setCurrentPage}
-                opacity={0.85}
-                itemsCount={winnersData.length}
-                perPage={8}
-            />
         </div>
     )
 }
