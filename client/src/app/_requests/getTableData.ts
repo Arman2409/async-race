@@ -1,3 +1,5 @@
+import { GARAGE_PER_PAGE } from "../_configs/garage";
+import { WINNERS_PER_PAGE } from "../_configs/winners";
 import axiosInstance from "./utils/axiosInstance";
 
 const getTableData = async (
@@ -6,10 +8,10 @@ const getTableData = async (
 ) => {
     const params = forTable === "garage" ? {
         _page: page,
-        _limit: 8
+        _limit: GARAGE_PER_PAGE
     } : {
         _page: page,
-        _limit: 8,
+        _limit: WINNERS_PER_PAGE,
         _sort: 'time',
         _order: 'desc',
     }

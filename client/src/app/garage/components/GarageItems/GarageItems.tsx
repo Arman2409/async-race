@@ -1,21 +1,31 @@
 "use client"
+import { useContext } from "react";
+
 import styles from "../../../_styles/Garage/components/GarageItems/GarageItems.module.scss";
+import { GarageContext } from "../../../_context/garage";
 import GarageItem from "./components/GarageItem/GarageItem";
 import type { GarageItemsProps } from "../../../_types/garage";
 
 const GarageItems = (
-    { setSelected,
-        garageItems,
-        getGarageItems }: GarageItemsProps) => (
-    <div className={styles.garage_items}>
-        {garageItems.map((item: any) => (
-            <GarageItem
-                key={item?.id}
-                updateItems={getGarageItems}
-                setSelected={setSelected}
-                {...item} />
-        ))}
-    </div>
-)
+    { garageItems,
+        getGarageItems }: GarageItemsProps) => {
+    const { setSelected, allRacing, setWinner, setAllRacing, setRacingCount } = useContext(GarageContext)
+
+    return (
+        <div className={styles.garage_items}>
+            {garageItems.map((item: any) => (
+                <GarageItem
+                    key={item?.id}
+                    setSelected={setSelected}
+                    allRacing={allRacing}
+                    setWinner={setWinner}
+                    setAllRacing={setAllRacing}
+                    setRacingCount={setRacingCount}
+                    updateItems={getGarageItems}
+                    {...item} />
+            ))}
+        </div>
+    )
+}
 
 export default GarageItems;

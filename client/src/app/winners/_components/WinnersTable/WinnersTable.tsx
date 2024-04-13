@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, } from "react";
 import { FaTrophy } from "react-icons/fa6";
 
 import styles from "../../../_styles/Winners/components/WinnersTable.module.scss";
@@ -14,10 +14,11 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: {
 
     const getWinners = useCallback((async () => {
         let data = await getTableData("winners", currentPage);
-        data = await Promise.all(data.map(async (winner: any) => {
+        data = await Promise.all(data.flatMap(async (winner: any) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
-                const { name = "...Deleted...", color = "" } = { ...winnerDetails || {} };
+                const { name = "", color = "" } = { ...winnerDetails || {} };
+                if(!name) return [];
                 return {
                     ...winner,
                     name,

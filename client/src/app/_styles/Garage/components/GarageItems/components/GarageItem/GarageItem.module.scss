@@ -23,9 +23,9 @@
             content: "";
             position: absolute;
             width: 1px;
-            height: 90%;
+            height: 80%;
             left: 115px;
-            top: 5%;
+            top: 10%;
             background-color: white;
         }
 
@@ -82,7 +82,8 @@
     }
 
     &__name {
-        justify-self: center;
+        margin-left: 5px;
+        opacity: 0.8;
         font-size: 20px;
         color: white;
     }
