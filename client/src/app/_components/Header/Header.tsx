@@ -11,9 +11,7 @@ const Header = () => {
 
   useEffect(() => {
     window.onload = () => {
-      setTimeout(() => {
-        setShowLoading(false);
-      }, WINDOW_LOAD_DELAY * 1000)
+      setTimeout(() => setShowLoading(false), WINDOW_LOAD_DELAY * 1000)
     }
   }, [setShowLoading, window])
 
@@ -23,11 +21,15 @@ const Header = () => {
       <Loading
         zIndex={10}
         show={showLoading} />
-      <Lights key="left" />
+      <Lights
+        key="left"
+        position={"left"} />
       <img
         className={styles.header__logo}
         src="./logo.png" />
-      <Lights key="right" />
+      <Lights
+        key="right"
+        position={"right"} />
     </div>
   )
 }

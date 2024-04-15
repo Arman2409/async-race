@@ -4,7 +4,7 @@ import { TbRestore } from "react-icons/tb";
 
 import styles from "../../../../../_styles/Garage/components/GaaragActions/GaragInputs/GarageInputs.module.scss";
 import Button from "../../../../../_components/shared/Button/Button";
-import { GarageContext } from "../../../../../_context/garage";
+import { garageContext } from "../../../../../_context/garage";
 import editCar from "@/app/_requests/editCar";
 import addCar from "@/app/_requests/addCar";
 import { CAR_NAME_MAX_LENGTH, ADD_INPUT_PLACEHOLDER, COLOR_INPUT_DEFAULT_COLOR } from "@/app/_configs/garage";
@@ -13,7 +13,7 @@ const GarageInputs = () => {
     const [color, setColor] = useState<string>(COLOR_INPUT_DEFAULT_COLOR);
     const [name, setName] = useState<string>("");
 
-    const { selected, setSelected, getGarageItems } = useContext(GarageContext)
+    const { selected, setSelected, getGarageItems } = useContext(garageContext);
 
     const submit = useCallback(async () => {
         if (selected) {

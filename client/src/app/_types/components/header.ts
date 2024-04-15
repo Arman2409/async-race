@@ -3,3 +3,9 @@ export interface Light {
     y: number
     color: "red" | "blue"
 }
+
+// props 
+
+export interface LightProps {
+    position: "left" | "right"
+}

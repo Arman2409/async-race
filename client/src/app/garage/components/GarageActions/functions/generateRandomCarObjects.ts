@@ -1,13 +1,13 @@
 import carBrandsWithModels from "./data/carBrandsWithModels";
 
-function generateRandomCarObjects() {
+// Function to generate random HEX color
+const getRandomColor = () => {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
+
+const generateRandomCarObjects = () => {
   const carObjects = [];
   const numCombinations = 100;
-
-  // Function to generate random HEX color
-  function getRandomColor() {
-    return '#' + Math.floor(Math.random() * 16777215).toString(16);
-  }
 
   // Generate random combinations
   for (let i = 0; i < numCombinations; i++) {

@@ -1,21 +1,21 @@
 import type { Variants } from "framer-motion";
 
-const getRandomNumber = (min: number, max: number) => {
+const getRandomNumberPx = (min: number, max: number):string => {
   return Math.floor(Math.random() * (max - min + 1)) + min + "px";
 }
 
-const getRandomBorderRadius = () => {
-  return `${getRandomNumber(0, 15)} ${getRandomNumber(0, 15)} ${getRandomNumber(0, 15)} ${getRandomNumber(0, 15)}`
+const getRandomBorderRadius = ():string => {
+  return `${getRandomNumberPx(0, 15)} ${getRandomNumberPx(0, 15)} ${getRandomNumberPx(0, 15)} ${getRandomNumberPx(0, 15)}`
 }
 
 const getFogVariants = (order: number): Variants => ({
   initial: {
-    left: getRandomNumber(2.5, 17.5),
-    top: getRandomNumber(order * 5, order * 5 + 5),
+    left: getRandomNumberPx(2.5, 17.5),
+    top: getRandomNumberPx(order * 5, order * 5 + 5),
   },
   animate: {
-    width: getRandomNumber(3, 7),
-    height: getRandomNumber(3, 7),
+    width: getRandomNumberPx(3, 7),
+    height: getRandomNumberPx(3, 7),
     borderRadius: getRandomBorderRadius(),
     transition: {
       duration: 1,

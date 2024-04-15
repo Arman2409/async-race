@@ -4,13 +4,14 @@ import { useState } from "react";
 import styles from "../_styles/Winners/Winners.module.scss";
 import WinnersTable from "./_components/WinnersTable/WinnersTable";
 import Pagination from "../_components/shared/Pagination/Pagination";
+import type { Winner } from "../_types/pages/winners/winner";
 
-const Winners = () => {
-    const [winnersData, setWinnersData] = useState<any[]>([]);
+const Winner = () => {
+    const [winnersData, setWinnersData] = useState<Winner[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
 
     return (
-        <div className={styles.winners}>
+        <div className={styles.winner}>
             <WinnersTable
                 currentPage={currentPage}
                 winnersData={winnersData}
@@ -26,4 +27,4 @@ const Winners = () => {
     )
 }
 
-export default Winners;
+export default Winner;

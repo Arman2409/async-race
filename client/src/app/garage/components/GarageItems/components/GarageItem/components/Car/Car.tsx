@@ -4,7 +4,7 @@ import { motion, useAnimationControls } from "framer-motion";
 import styles from "../../../../../../../_styles/Garage/components/GarageItems/components/GarageItem/components/Car/Car.module.scss";
 import CarIcon from "../../../../../../../_components/shared/CarIcon/CarIcon";
 import Fog from "../../../../../../../_components/shared/Fog/Fog";
-import type { CarProps } from "../../../../../../../_types/garage";
+import type { CarProps } from "../../../../../../../_types/pages/garage/garage";
 
 const Car = ({
     color,
@@ -12,8 +12,7 @@ const Car = ({
     highwayWidth,
     status,
     finishRace,
-    setStatus }: CarProps & any) => {
-    const carCont = useRef<any>();
+    setStatus}: CarProps) => {
     const controls = useAnimationControls()
 
     useEffect(() => {
@@ -26,7 +25,7 @@ const Car = ({
             const animationDistance = highwayWidth - 115;
             const duration = highwayWidth / velocity;
             controls.start({ x: animationDistance, transition: { duration } })
-                .then((d) => finishRace());
+                .then(() => finishRace());
         }
 
     }, [controls, driveDetails, highwayWidth, setStatus, status])
@@ -43,16 +42,10 @@ const Car = ({
     return (
         <motion.div
             animate={controls}
-            ref={carCont}
             className={styles.car}>
             <Fog
                 show={status === "started" || status === "broken" ||  status === "waiting"}
-                extraStyles={{
-                    left: status === "broken" ? "50px" : "unset",
-                }}
-                fogStyles={{
-                    backgroundColor: status === "broken" ? "black" : "grey",
-                }}
+                isBroken={status === "broken"}
             />
             <CarIcon
                 color={color}

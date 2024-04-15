@@ -6,18 +6,15 @@ import getTableData from "../../../_requests/getTableData";
 import getWinnerDetails from "../../../_requests/getWinnerDetails";
 import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
 import Loading from "../../../_components/shared/Loading/Loading";
+import type { Winner, WinnersTableProps } from "../../../_types/pages/winners/winner";
 
-const WinnersTable = ({ currentPage, winnersData, setWinnersData }: {
-    currentPage: number,
-    winnersData: any[],
-    setWinnersData: Function
-}) => {
+const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTableProps) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const getWinners = useCallback((async () => {
         setLoading(true);
         let data = await getTableData("winners", currentPage);
-        data = await Promise.all(data.flatMap(async (winner: any) => {
+        data = await Promise.all(data.flatMap(async (winner:Winner) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
                 const { name = "", color = "" } = { ...winnerDetails || {} };
@@ -30,7 +27,7 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: {
             }
             return winner;
         }))
-        data = data.flatMap((e:any) => e);
+        data = data.flatMap((e:Winner) => e);
         setWinnersData(data);
         setLoading(false);
     }), [setWinnersData, currentPage, setLoading])

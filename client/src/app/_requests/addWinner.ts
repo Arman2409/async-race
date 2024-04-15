@@ -1,13 +1,14 @@
 import axiosInstance from "./utils/axiosInstance";
+import type { Winner } from "../_types/pages/winners/winner";
 
-const addWinner = async ({ id, time, ...rest }: any) => {
+const addWinner = async ({ id, time, wins, ...rest }: Winner) => {
     try {
-        const alreadyExisting: any = await axiosInstance.get(`/winners/${id}`)
+        const alreadyExisting = await axiosInstance.get(`/winners/${id}`)
             .catch(() => null);
         if (alreadyExisting?.data) {
-            let {wins = 0, time: existingTime = 0} = {...alreadyExisting.data || {}}
+            let { wins: existingWins = 0, time: existingTime = 0 } = { ...alreadyExisting.data || {} }
             return await axiosInstance.patch(`/winners/${id}`, {
-                wins: wins += 1,
+                wins: existingWins += 1,
                 time: existingTime < time ? existingTime : time,
             })
                 .catch(() => null);
@@ -19,10 +20,10 @@ const addWinner = async ({ id, time, ...rest }: any) => {
             ...rest
         })
             .then(({ data }) => data)
-            .catch(() => null);    
+            .catch(() => null);
 
     } catch (err) {
-        const {message = "Error occured while fetching"} = {...err || {}}
+        const { message = "Error occured while fetching" } = { ...err || {} }
         console.error(message)
     }
 }

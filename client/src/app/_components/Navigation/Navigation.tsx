@@ -4,9 +4,10 @@ import { useRouter, usePathname } from "next/navigation";
 
 import styles from "../../_styles/Navigation/Navigation.module.scss";
 import Button from "../shared/Button/Button";
+import type { Active } from "../../_types/components/navigation";
 
 const Navigation = () => {
-  const [active, setActive] = useState<"Garage" | "Winners">();
+  const [active, setActive] = useState<Active>("Garage");
   const router = useRouter();
   const pathname = usePathname();
 
