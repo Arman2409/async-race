@@ -1,4 +1,4 @@
-export const ADD_INPUT_PLACEHOLDER = "Add car";
+export const ADD_INPUT_PLACEHOLDER = "Car name";
 
 export const COLOR_INPUT_DEFAULT_COLOR = "#FFFFFF";
 

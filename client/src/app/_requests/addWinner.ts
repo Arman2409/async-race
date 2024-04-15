@@ -4,12 +4,13 @@ const addWinner = async ({ id, time, ...rest }: any) => {
     try {
         const alreadyExisting: any = await axiosInstance.get(`/winners/${id}`)
             .catch(() => null);
-            
         if (alreadyExisting?.data) {
+            let {wins = 0, time: existingTime = 0} = {...alreadyExisting.data || {}}
             return await axiosInstance.patch(`/winners/${id}`, {
-                wins: alreadyExisting.wins += 1,
-                time: alreadyExisting.time > time ? time : alreadyExisting.time,
-            });
+                wins: wins += 1,
+                time: existingTime < time ? existingTime : time,
+            })
+                .catch(() => null);
         }
         return axiosInstance.post("/winners", {
             id,
@@ -18,9 +19,11 @@ const addWinner = async ({ id, time, ...rest }: any) => {
             ...rest
         })
             .then(({ data }) => data)
+            .catch(() => null);    
 
-    } catch ({ message }: any) {
-        console.error(message || "Error occured")
+    } catch (err) {
+        const {message = "Error occured while fetching"} = {...err || {}}
+        console.error(message)
     }
 }
 

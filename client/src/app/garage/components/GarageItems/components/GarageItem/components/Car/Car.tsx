@@ -17,20 +17,23 @@ const Car = ({
     const controls = useAnimationControls()
 
     useEffect(() => {
-        const { velocity = 0, distance = 1000 } = { ...driveDetails };
-        if (!velocity) {
-            controls.stop();
-            return;
+        if (status === "started") {
+            const { velocity = 0, distance = 1000 } = { ...driveDetails };
+            if (!velocity) {
+                controls.stop();
+                return;
+            }
+            const animationDistance = highwayWidth - 115;
+            const duration = highwayWidth / velocity;
+            controls.start({ x: animationDistance, transition: { duration } })
+                .then((d) => finishRace());
         }
-        const animationDistance = highwayWidth - 115;
-        const duration = highwayWidth / velocity;
-        controls.start({ x: animationDistance, transition: { duration } })
-        .then((d) => finishRace());
-    }, [controls, driveDetails, highwayWidth, setStatus])
+
+    }, [controls, driveDetails, highwayWidth, setStatus, status])
 
     useEffect(() => {
-        if (status === "initial") {
-            controls.start({x: 0}, {duration: 0});
+        if (status === "initial" || status === "waiting") {
+            controls.start({ x: 0 }, { duration: 0 });
         }
         if (status === "broken") {
             controls.stop();
@@ -42,22 +45,22 @@ const Car = ({
             animate={controls}
             ref={carCont}
             className={styles.car}>
-            <Fog 
-              show={status === "started" || status === "broken"}
-              extraStyles={{
-                 left: status === "broken"  ? "50px" : "unset",
-              }}
-              fogStyles={{
-                backgroundColor: status === "broken"  ? "black" : "grey",
-              }}
-             />
+            <Fog
+                show={status === "started" || status === "broken" ||  status === "waiting"}
+                extraStyles={{
+                    left: status === "broken" ? "50px" : "unset",
+                }}
+                fogStyles={{
+                    backgroundColor: status === "broken" ? "black" : "grey",
+                }}
+            />
             <CarIcon
                 color={color}
-                lightsColor={status === "started" ? "yellow" : "gray"} />
+                lightsColor={status === "started" || status === "waiting" ? "yellow" : "gray"} />
             <div
                 className={styles.car__lights}
                 style={{
-                    opacity: status === "started" ? 1 : 0
+                    opacity: status === "started" || status === "waiting" ? 1 : 0
                 }} />
         </motion.div>
     )

@@ -3,42 +3,59 @@ import { MdOutlineStart, MdOutlineCancel } from "react-icons/md";
 
 import styles from "../../../../../_styles/Garage/components/GarageItems/components/GarageItem/GarageItem.module.scss";
 import { CAR_NAME_MAX_LENGTH } from "../../../../../_configs/garage";
-import deleteCar from "../../../../../_requests/deleteCar";
 import updateCarStatus from "../../../../../_requests/updateCarStatus";
 import checkOnCar from "../../../../../_requests/checkOnCar";
 import cutString from "../../../../../_helpers/cutString";
-import type { GarageItemProps } from "../../../../../_types/garage";
 import Car from "./components/Car/Car";
-import Button from "../../../../../_components/shared/Button/Button";
+import ItemActions from "./components/ItemActions/ItemActions";
+import type { GarageItemProps } from "../../../../../_types/garage";
+import { roundToPrecision } from "./utils/functions";
 
 const GarageItem = (
   { name,
     id,
     color,
+    isLast,
     updateItems,
-    setSelected, 
-    allRacing, 
-    setWinner, 
+    setSelected,
+    allRacing,
+    setWinner,
     setAllRacing
   }: GarageItemProps & any) => {
-  const [carStatus, setCarStatus] = useState<"started" | "finished" | "broken" | "initial">("initial");
+  const [carStatus, setCarStatus] = useState<"started" | "finished" | "broken" | "initial" | "waiting">("initial");
   const [driveDetails, setDriveDetails] = useState<{ velocity: number, distance: number }>({} as any);
   const [highwayWidth, setHighwayWidth] = useState<number>(0);
   const [resetCar, setResetCar] = useState<boolean>(false);
   const highway = useRef<any>();
 
-  const startRace = useCallback(async () => {
-    if (carStatus !== "initial") return;
-    const startResult:any = await updateCarStatus(id, "started");
-    if (startResult) {
-      setCarStatus("started");
-      setDriveDetails(startResult);
-      const checkOnResult: any = await checkOnCar(id);
-      if (!checkOnResult?.success) {
-        setCarStatus("broken");
-      }
+  const checkCarStatus = useCallback(async () => {
+    const checkOnResult: any = await checkOnCar(id);
+    if (!checkOnResult?.success) {
+      setCarStatus((curr:any) => {
+        if(curr !== "initial") return "broken";
+        return curr;
+        });
     }
-  }, [setDriveDetails, setCarStatus, carStatus])
+  }, [setCarStatus]);
+
+  const startRace = useCallback(async (wait?: boolean) => {
+    if ((carStatus !== "initial" && carStatus !== "waiting") && !wait) return;
+    if (carStatus === "waiting") {
+      setCarStatus("started");
+      checkCarStatus();
+      return;
+    }
+    const startResult = await updateCarStatus(id, "started");
+    if (startResult) {
+      if (wait) {
+        setCarStatus("waiting");
+      } else {
+        setCarStatus("started");
+        checkCarStatus();
+      }
+      setDriveDetails(startResult);
+    }
+  }, [setDriveDetails, checkCarStatus, setCarStatus])
 
   const getStoppedStatus = useCallback(async () => await updateCarStatus(id, "stopped"), [])
 
@@ -57,42 +74,35 @@ const GarageItem = (
   const cancelRace = useCallback(async () => {
     const stoppedStatus = await getStoppedStatus();
     if (stoppedStatus) {
+      if (allRacing === "ready") {
+        setCarStatus("waiting");
+        return;
+      }
       setCarStatus("initial");
     }
-  }, [getStoppedStatus, setCarStatus])
-
-  const deleteCurrent = useCallback(async () => {
-    const deleteResult = await deleteCar(id);
-    if (deleteResult) {
-      updateItems && updateItems();
-    }
-  }, [updateItems]);
-
-  const selectCurrent = useCallback(() => {
-    setSelected({
-      id,
-      name,
-      color
-    });
-  }, [id, name, color, setSelected]);
+  }, [getStoppedStatus, setCarStatus, allRacing])
 
   useEffect(() => {
     setHighwayWidth(highway.current.offsetWidth);
-  }, [setHighwayWidth])
+    window.addEventListener("resize", ({ target }: Event) => {
+      setHighwayWidth(highway.current.offsetWidth);
+    })
+  }, [setHighwayWidth, window])
 
   useEffect(() => {
-    switch (allRacing){
+    switch (allRacing) {
       case "started":
-         startRace();
-         break; 
+        startRace();
+        break;
       case "ready":
-         cancelRace();
-         break;
+        cancelRace();
+        startRace(true);
+        break;
       case "cancel":
-         cancelRace();
-         break;
+        cancelRace();
+        break;
     }
-  }, [allRacing, cancelRace])
+  }, [allRacing, cancelRace, startRace])
 
   useEffect(() => {
     if (carStatus === "finished" && allRacing === "started") {
@@ -102,7 +112,7 @@ const GarageItem = (
             id,
             name,
             color,
-            time: driveDetails.velocity / highwayWidth
+            time: roundToPrecision(highwayWidth / driveDetails.velocity, 1)
           }
         }
         return winner;
@@ -114,21 +124,18 @@ const GarageItem = (
     <div
       className={styles.garage_item}
     >
-      <div className={styles.garage_item__actions_cont}>
-        <Button
-          text="Select"
-          type="update"
-          onClick={selectCurrent} />
-        <Button
-          text="Remove"
-          type="delete"
-          onClick={deleteCurrent} />
-      </div>
+      <ItemActions
+        id={id}
+        name={name}
+        color={color}
+        setSelected={setSelected}
+        updateItems={updateItems}
+      />
       <div className={styles.garage_item__drive_buttons}>
         <MdOutlineStart
           color={carStatus !== "initial" ? "green" : ""}
           className={styles.garage_item__drive_buttons_start}
-          onClick={startRace} />
+          onClick={() => startRace()} />
         <MdOutlineCancel
           className={styles.garage_item__drive_buttons_cancel}
           onClick={cancelRace}
@@ -137,8 +144,8 @@ const GarageItem = (
       <div
         ref={highway}
         className={styles.garage_item__highway}>
-        <div
-          className={styles.garage_item__stripes} />
+        {!isLast && <div
+          className={styles.garage_item__stripes} />}
         <Car
           color={color}
           status={carStatus}

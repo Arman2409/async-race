@@ -13,12 +13,13 @@ const GarageItems = (
 
     return (
         <div className={styles.garage_items}>
-            {garageItems.map((item: any) => (
+            {garageItems.map((item: any, index:number) => (
                 <GarageItem
                     key={item?.id}
                     setSelected={setSelected}
                     allRacing={allRacing}
                     setWinner={setWinner}
+                    isLast={index === garageItems.length - 1}
                     setAllRacing={setAllRacing}
                     setRacingCount={setRacingCount}
                     updateItems={getGarageItems}

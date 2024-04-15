@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-import styles from "../../../../../../_styles/Header/components/GlobalLoading/components/Wheel.module.scss";
+import styles from "../../../../../_styles/shared/Loading/components/Wheel.module.scss";
 import { carWheelVariants } from "./utils/variants";
 import { getRectDegrees } from "./utils/functions";
 

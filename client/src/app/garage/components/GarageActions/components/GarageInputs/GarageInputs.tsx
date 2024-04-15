@@ -34,6 +34,8 @@ const GarageInputs = () => {
             }
         )
         if (addResult) {
+            setName("");
+            setColor(COLOR_INPUT_DEFAULT_COLOR);
             getGarageItems && getGarageItems();
         }
     }, [name, color, selected, setSelected, setName, getGarageItems]);

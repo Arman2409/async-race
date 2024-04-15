@@ -25,7 +25,7 @@ const InfoModal = ({ winner, allRacing }: any) => {
             setShowContent("winner");
             setTimeout(() => {
                 setShowContent(null);
-            }, SHOW_WINNER_TIME)
+            }, SHOW_WINNER_TIME * 1000)
         }
     }, [setShowContent])
 
@@ -70,6 +70,9 @@ const InfoModal = ({ winner, allRacing }: any) => {
             </motion.h1>}
             {showContent === "winner" && (
                 <>
+                    <img 
+                     className={styles.show_modal__winner_img} 
+                     src="/winner.png" />
                     <CarIcon color={winner?.color} />
                     <p className={styles.show_modal__winner_name}>
                         {winner?.name}
