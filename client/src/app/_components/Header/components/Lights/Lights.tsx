@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import styles from "../../../../_styles/Header/components/Lights.module.scss";
+import { HEADER_LIGHTS_RADIUS } from "../../../../_configs/components";
 import type { Light } from "../../../../_types/header";
 
 const Lights = () => {
@@ -16,7 +17,7 @@ const Lights = () => {
         canvasRef.current.height = canvasContRef.current.offsetHeight;
 
         const ctx = canvasRef.current.getContext('2d');
-        const lightRadius = 5; // Radius of each light
+        const lightRadius = HEADER_LIGHTS_RADIUS; // Radius of each light
         const numLights = Math.floor((canvasRef.current.width - lightRadius * 4) / (lightRadius * 4)); // Number of lights
         let currentX = 0;
         const lightsY = canvasRef.current.height * 0.5;

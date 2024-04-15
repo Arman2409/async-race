@@ -6,14 +6,13 @@
     width: 115px;
     height: 50px;
     position: relative;
-    border: 1px solid green;
     z-index: 1;
 
     &__lights {
         width: 40px;
         height: 100%;
         position: relative;
-        border: 1px solid green;
+        transition: 0.5s;
 
         &::before,
         &::after {

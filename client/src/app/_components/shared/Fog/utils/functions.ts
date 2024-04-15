@@ -14,8 +14,8 @@ const getFogVariants = (order: number): Variants => ({
     top: getRandomNumber(order * 5, order * 5 + 5),
   },
   animate: {
-    width: getRandomNumber(4, 6),
-    height: getRandomNumber(4, 6),
+    width: getRandomNumber(3, 7),
+    height: getRandomNumber(3, 7),
     borderRadius: getRandomBorderRadius(),
     transition: {
       duration: 1,

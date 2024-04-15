@@ -1,23 +1,27 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, } from "react";
 import { FaTrophy } from "react-icons/fa6";
 
 import styles from "../../../_styles/Winners/components/WinnersTable.module.scss";
 import getTableData from "../../../_requests/getTableData";
 import getWinnerDetails from "../../../_requests/getWinnerDetails";
 import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
+import Loading from "../../../_components/shared/Loading/Loading";
 
 const WinnersTable = ({ currentPage, winnersData, setWinnersData }: {
     currentPage: number,
     winnersData: any[],
     setWinnersData: Function
 }) => {
+    const [loading, setLoading] = useState<boolean>(false);
 
     const getWinners = useCallback((async () => {
+        setLoading(true);
         let data = await getTableData("winners", currentPage);
-        data = await Promise.all(data.map(async (winner: any) => {
+        data = await Promise.all(data.flatMap(async (winner: any) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
-                const { name = "...Deleted...", color = "" } = { ...winnerDetails || {} };
+                const { name = "", color = "" } = { ...winnerDetails || {} };
+                if(!name) return [];
                 return {
                     ...winner,
                     name,
@@ -26,8 +30,10 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: {
             }
             return winner;
         }))
-        setWinnersData(data)
-    }), [setWinnersData, currentPage])
+        data = data.flatMap((e:any) => e);
+        setWinnersData(data);
+        setLoading(false);
+    }), [setWinnersData, currentPage, setLoading])
 
     useEffect(() => {
         getWinners();
@@ -35,6 +41,10 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: {
 
     return (
         <div className={styles.winners_table_cont}>
+            <Loading
+                show={loading}
+                zIndex={9}
+            />
             <table className={styles.winners_table_cont__table}>
                 <thead>
                     <tr>

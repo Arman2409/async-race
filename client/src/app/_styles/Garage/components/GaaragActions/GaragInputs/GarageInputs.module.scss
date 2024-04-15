@@ -1,13 +1,12 @@
-@import "../../common/variables.scss";
-@import "../../common/classes.scss";
+@import "../../../../common/variables.scss";
+@import "../../../../common/classes.scss";
 
 .actions_input_cont {
    @extend .flex_center;
 
-   justify-content: flex-end;
-   width: 100%;
+   justify-content: space-between;
+   width: auto;
    height: 40px;
-   border: 1px solid green;
 
    &__cancel_edit {
       font-size: 20px;

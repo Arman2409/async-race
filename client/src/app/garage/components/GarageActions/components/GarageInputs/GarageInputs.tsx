@@ -1,16 +1,19 @@
-"use client"
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
 import { LuPaintbrush2 } from "react-icons/lu";
 import { TbRestore } from "react-icons/tb";
 
-import styles from "../../../_styles/Garage/components/ActionsInput.module.scss";
-import addCar from "../../../_requests/addCar";
-import editCar from "../../../_requests/editCar";
-import Button from "../../../_components/shared/Button/Button";
+import styles from "../../../../../_styles/Garage/components/GaaragActions/GaragInputs/GarageInputs.module.scss";
+import Button from "../../../../../_components/shared/Button/Button";
+import { GarageContext } from "../../../../../_context/garage";
+import editCar from "@/app/_requests/editCar";
+import addCar from "@/app/_requests/addCar";
+import { CAR_NAME_MAX_LENGTH, ADD_INPUT_PLACEHOLDER, COLOR_INPUT_DEFAULT_COLOR } from "@/app/_configs/garage";
 
-const ActionsInput = ({ selected, setSelected, getGarageItems }: any) => {
-    const [color, setColor] = useState<string>("");
+const GarageInputs = () => {
+    const [color, setColor] = useState<string>(COLOR_INPUT_DEFAULT_COLOR);
     const [name, setName] = useState<string>("");
+
+    const { selected, setSelected, getGarageItems } = useContext(GarageContext)
 
     const submit = useCallback(async () => {
         if (selected) {
@@ -31,32 +34,37 @@ const ActionsInput = ({ selected, setSelected, getGarageItems }: any) => {
             }
         )
         if (addResult) {
+            setName("");
+            setColor(COLOR_INPUT_DEFAULT_COLOR);
             getGarageItems && getGarageItems();
         }
-    }, [name, color, selected, setSelected, setName, setColor, getGarageItems]);
+    }, [name, color, selected, setSelected, setName, getGarageItems]);
 
     const cancelEdit = useCallback(() => {
         setSelected(null);
         setName("");
-        setColor("");
+        setColor(COLOR_INPUT_DEFAULT_COLOR);
     }, [setSelected, setName, setColor])
+
 
     useEffect(() => {
         if (selected) {
-            setColor(selected?.color)
+            setColor(selected?.color || COLOR_INPUT_DEFAULT_COLOR)
             setName(selected?.name)
         }
     }, [selected, setColor, setName])
 
     return (
-        <div className={styles.actions_input_cont}>
+        <div  className={styles.actions_input_cont}>
             {selected && <TbRestore
-             className={styles.actions_input_cont__cancel_edit} 
-             onClick={cancelEdit} />}
+                className={styles.actions_input_cont__cancel_edit}
+                onClick={cancelEdit} />}
             <input
                 type="text"
                 value={name}
+                placeholder={ADD_INPUT_PLACEHOLDER}
                 className={styles.actions_input}
+                maxLength={CAR_NAME_MAX_LENGTH}
                 onChange={event => setName(event?.target?.value)} />
             <div className={styles.actions_color_input_cont}>
                 <LuPaintbrush2
@@ -65,7 +73,7 @@ const ActionsInput = ({ selected, setSelected, getGarageItems }: any) => {
                     value={color}
                     type="color"
                     className={styles.actions_color_input}
-                    onChange={event => setColor(event?.target?.value)} />
+                    onChange={({target}) => setColor(target?.value)} />
             </div>
             <Button
                 disabled={!name}
@@ -75,4 +83,4 @@ const ActionsInput = ({ selected, setSelected, getGarageItems }: any) => {
     )
 }
 
-export default ActionsInput;
+export default GarageInputs;

@@ -1,8 +1,9 @@
-// axiosConfig.ts
 import axios from "axios";
 
+import { SERVER_URL } from "../../_configs/global";
+
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:4000",
-});
+  baseURL: SERVER_URL,
+})
 
 export default axiosInstance;
