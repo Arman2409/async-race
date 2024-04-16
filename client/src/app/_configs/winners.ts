@@ -1,1 +1,1 @@
-export const WINNERS_PER_PAGE = 8;
+export const WINNERS_PER_PAGE = 10;

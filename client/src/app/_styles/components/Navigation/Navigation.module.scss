@@ -1,0 +1,26 @@
+@import "../../common/variables.scss";
+@import "../../common/classes.scss";
+
+.navigation {
+    @extend .flex_center;
+
+    width: 100%;
+    height: 40px;
+    top: $header_height;
+
+    &__page_title {
+        margin-bottom: 10px;
+        color: $blue_light;
+        font-size: 35px;
+        padding: 5px;
+        border-radius: 15px;
+        position: absolute;
+        left: 10%;
+        text-shadow: 0 -1px 4px $grey_main, 0 -10px 20px $orange_main, 0 -18px 40px $orange_main, 2px 2px 2px $black_main;
+        text-shadow:
+            0 -2px 8px $grey_main,
+            -2px -2px 20px $orange_main,
+            2px -2px 20px $orange_main,
+            0 2px 20px $black_main;
+    }
+}

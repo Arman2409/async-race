@@ -1,4 +1,6 @@
-export const carWheelVariants = {
+import type { Variants } from "framer-motion";
+
+export const carWheelVariants:Variants = {
     initial: {
         transform: "rotate(15deg)"
     },

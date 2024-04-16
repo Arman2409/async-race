@@ -1,22 +1,23 @@
 "use client"
 import { useCallback, useEffect, useState } from "react";
 
-import styles from "./_styles/Garage/Garage.module.scss";
+import styles from "./_styles/pages/Garage/Garage.module.scss";
 import getTableData from "./_requests/getTableData";
-import { GarageContext } from "./_context/garage";
+import { garageContext } from "./_context/garage";
 import Pagination from "./_components/shared/Pagination/Pagination";
 import GarageActions from "./garage/components/GarageActions/GarageActions";
 import GarageItems from "./garage/components/GarageItems/GarageItems";
 import InfoModal from "./garage/components/InfoModal/InfoModal";
 import Loading from "./_components/shared/Loading/Loading";
+import type { Car } from "./_types/pages/garage/garage";
+import type { Winner } from "./_types/pages/winners/winner";
 
 const Garage = () => {
-  const [allRacing, setAllRacing] = useState<| "started" | "ready" | "cancel" | "initial">("initial");
-  const [racingCount, setRacingCount] = useState<number>(0);
-  const [selected, setSelected] = useState<any>();
-  const [winner, setWinner] = useState<any>();
+  const [allRacing, setAllRacing] = useState<"started" | "ready" | "cancel" | "initial">("initial");
+  const [selected, setSelected] = useState<Car>({} as Car);
+  const [winner, setWinner] = useState<Winner>({} as Winner);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [garageItems, setGarageItems] = useState<any[]>([]);
+  const [garageItems, setGarageItems] = useState<Car[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getGarageItems = useCallback(async () => {
@@ -28,19 +29,18 @@ const Garage = () => {
 
   useEffect(() => {
     getGarageItems();
+    setAllRacing("initial");
   }, [currentPage, getGarageItems]);
 
   return (
-    <GarageContext.Provider value={{
-      setAllRacing,
+    <garageContext.Provider value={{
       winner,
-      setWinner,
       allRacing,
       selected,
+      setAllRacing,
+      setWinner,
       setSelected,
       getGarageItems,
-      racingCount,
-      setRacingCount
     }}>
       <>
         <InfoModal
@@ -65,7 +65,7 @@ const Garage = () => {
         </div>
       </>
 
-    </GarageContext.Provider>
+    </garageContext.Provider>
   );
 }
 

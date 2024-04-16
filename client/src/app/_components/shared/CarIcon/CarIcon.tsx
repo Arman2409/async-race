@@ -1,4 +1,10 @@
-const CarIcon = ({ color, lightsColor = "gray", size = 50, rotate = 90 }: { color?: string, lightsColor?: string, size?: number, rotate?: number }) => {
+import type { CarIconProps } from "../../../_types/components/shared/carIcons";
+
+const CarIcon = ({
+    color,
+    lightsColor = "gray",
+    size = 50,
+    rotate = 90 }: CarIconProps) => {
     return (
         <div
             className="flex_center"

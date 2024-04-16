@@ -1,26 +1,24 @@
 import { useEffect, useRef } from "react";
 
-import styles from "../../../../_styles/Header/components/Lights.module.scss";
+import styles from "../../../../_styles/components/Header/components/Lights.module.scss";
 import { HEADER_LIGHTS_RADIUS } from "../../../../_configs/components";
-import type { Light } from "../../../../_types/header";
+import type { Light, LightProps } from "../../../../_types/components/header";
 
-const Lights = () => {
+const Lights = ({ position }: LightProps) => {
     const lightsDrawn = useRef<boolean>(false);
-    const canvasRef = useRef<any>(null);
-    const canvasContRef = useRef<any>(null);
 
     useEffect(() => {
         if (lightsDrawn.current) return;
         lightsDrawn.current = true;
-
-        canvasRef.current.width = canvasContRef.current.offsetWidth;
-        canvasRef.current.height = canvasContRef.current.offsetHeight;
-
-        const ctx = canvasRef.current.getContext('2d');
+        const canvasEl = document.querySelector(`#lights_canvas_${position}`) as HTMLCanvasElement
+        const canvasCont = document.querySelector(`#canvas_cont_${position}`) as HTMLElement;
+        canvasEl?.setAttribute("width", String(canvasCont.offsetWidth));
+        canvasEl?.setAttribute("height", String(canvasCont.offsetHeight));;
+        const ctx = canvasEl.getContext('2d');
         const lightRadius = HEADER_LIGHTS_RADIUS; // Radius of each light
-        const numLights = Math.floor((canvasRef.current.width - lightRadius * 4) / (lightRadius * 4)); // Number of lights
+        const numLights = Math.floor((canvasEl.width - lightRadius * 4) / (lightRadius * 4)); // Number of lights
         let currentX = 0;
-        const lightsY = canvasRef.current.height * 0.5;
+        const lightsY = canvasEl.height * 0.5;
 
         let lights: Light[] = [];
 
@@ -43,25 +41,28 @@ const Lights = () => {
         }
 
         const drawLights = () => {
-            ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+            if (ctx) {
+                ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
 
-            for (const light of lights) {
-                ctx.beginPath();
-                ctx.arc(light.x, light.y, lightRadius, 0, 2 * Math.PI);
-                ctx.strokeStyle = `rgba(255, 255, 255)`;
-                ctx.lineWidth = 2; // Adjust border width as needed
-                ctx.stroke();
-                // Draw box shadow for depth
-                ctx.shadowColor = styles.black_main;
-                ctx.shadowBlur = lightRadius;
-                ctx.fillStyle = light.color === "red" ? styles.red_main : styles.blue_main;
-                ctx.fill();
+                for (const light of lights) {
 
-                // Reset shadow properties for next light
-                ctx.shadowColor = 'none';
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
-                ctx.shadowBlur = 0;
+                    ctx.beginPath();
+                    ctx.arc(light.x, light.y, lightRadius, 0, 2 * Math.PI);
+                    ctx.strokeStyle = `rgba(255, 255, 255)`;
+                    ctx.lineWidth = 2; // Adjust border width as needed
+                    ctx.stroke();
+                    // Draw box shadow for depth
+                    ctx.shadowColor = styles.black_main;
+                    ctx.shadowBlur = lightRadius;
+                    ctx.fillStyle = light.color === "red" ? styles.red_main : styles.blue_main;
+                    ctx.fill();
+
+                    // Reset shadow properties for next light
+                    ctx.shadowColor = 'none';
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
+                    ctx.shadowBlur = 0;
+                }
             }
         }
 
@@ -79,11 +80,11 @@ const Lights = () => {
 
     return (
         <div
+            id={`canvas_cont_${position}`}
             className={styles.lights}
-            ref={canvasContRef}>
+        >
             <canvas
-                id="lightCanvas"
-                ref={canvasRef}
+                id={`lights_canvas_${position}`}
             />
         </div>
     )

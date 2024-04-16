@@ -3,23 +3,25 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { PiTimer } from "react-icons/pi";
 import { motion } from "framer-motion";
 
-import styles from "../../../_styles/Garage/components/InfoModal.module.scss";
-import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
-import addWinner from "../../../_requests/addWinner";
+import styles from "../../../_styles/pages/Garage/components/InfoModal.module.scss";
 import { SHOW_WINNER_TIME, START_RACE_TIMEOUT } from "../../../_configs/garage";
+import addWinner from "../../../_requests/addWinner";
+import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
+import type { InfoModalProps } from "../../../_types/pages/garage/garage";
+import type { Winner } from "../../../_types/pages/winners/winner";
 
 const numberVariants = {
     initial: { opacity: 0, scale: 0 },
     animate: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
 };
 
-const InfoModal = ({ winner, allRacing }: any) => {
-    const [countdown, setCountdown] = useState<number>(3);
+const InfoModal = ({ winner, allRacing }: InfoModalProps) => {
+    const [countdown, setCountdown] = useState<number>(START_RACE_TIMEOUT);
     const [showContent, setShowContent] = useState<"countdown" | "winner" | null>(null);
 
-    const rtimeRef = useRef<any>();
+    const countInterval = useRef<NodeJS.Timeout|string>("");
 
-    const addNewWinner = useCallback(async (winnerData: any) => {
+    const addNewWinner = useCallback(async (winnerData:Winner) => {
         const result = await addWinner(winnerData);
         if (result) {
             setShowContent("winner");
@@ -33,13 +35,13 @@ const InfoModal = ({ winner, allRacing }: any) => {
         if (allRacing === "ready" && !showContent) {
             setShowContent("countdown");
             setCountdown(START_RACE_TIMEOUT);
-            if (rtimeRef.current) return;
-            rtimeRef.current = setInterval(() => {
+            if (countInterval.current) return;
+            countInterval.current = setInterval(() => {
                 setCountdown(curr => {
                     if (curr === 1) {
                         setShowContent(null);
-                        clearInterval(rtimeRef.current);
-                        rtimeRef.current = null;
+                        clearInterval(countInterval.current);
+                        countInterval.current = "";
                     }
                     return curr > 1 ? curr - 1 : 1
                 });
@@ -48,9 +50,7 @@ const InfoModal = ({ winner, allRacing }: any) => {
     }, [allRacing, setShowContent, showContent])
 
     useEffect(() => {
-        if (winner) {
-            addNewWinner(winner);
-        }
+        if (winner?.name) addNewWinner(winner);
     }, [winner, addNewWinner])
 
     return (

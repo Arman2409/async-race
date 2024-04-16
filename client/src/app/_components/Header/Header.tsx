@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 
-import styles from "../../_styles/Header/Header.module.scss";
+import styles from "../../_styles/components/Header/Header.module.scss";
 import { WINDOW_LOAD_DELAY } from "../../_configs/global";
 import Loading from "../shared/Loading/Loading";
 import Lights from "./components/Lights/Lights";
@@ -11,9 +11,7 @@ const Header = () => {
 
   useEffect(() => {
     window.onload = () => {
-      setTimeout(() => {
-        setShowLoading(false);
-      }, WINDOW_LOAD_DELAY * 1000)
+      setTimeout(() => setShowLoading(false), WINDOW_LOAD_DELAY * 1000)
     }
   }, [setShowLoading, window])
 
@@ -23,11 +21,15 @@ const Header = () => {
       <Loading
         zIndex={10}
         show={showLoading} />
-      <Lights key="left" />
+      <Lights
+        key="left"
+        position={"left"} />
       <img
         className={styles.header__logo}
         src="./logo.png" />
-      <Lights key="right" />
+      <Lights
+        key="right"
+        position={"right"} />
     </div>
   )
 }

@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MdOutlineStart, MdOutlineCancel } from "react-icons/md";
 
-import styles from "../../../../../_styles/Garage/components/GarageItems/components/GarageItem/GarageItem.module.scss";
+import styles from "../../../../../_styles/pages/Garage/components/GarageItems/components/GarageItem/GarageItem.module.scss";
 import { CAR_NAME_MAX_LENGTH } from "../../../../../_configs/garage";
 import updateCarStatus from "../../../../../_requests/updateCarStatus";
 import checkOnCar from "../../../../../_requests/checkOnCar";
 import cutString from "../../../../../_helpers/cutString";
+import { roundToPrecision } from "./utils/functions";
 import Car from "./components/Car/Car";
 import ItemActions from "./components/ItemActions/ItemActions";
-import type { GarageItemProps } from "../../../../../_types/garage";
-import { roundToPrecision } from "./utils/functions";
+import type { CarStatus, DriveDetails, GarageItemProps } from "../../../../../_types/pages/garage/garage";
+import type { Winner } from "../../../../../_types/pages/winners/winner";
 
 const GarageItem = (
   { name,
@@ -21,20 +22,19 @@ const GarageItem = (
     allRacing,
     setWinner,
     setAllRacing
-  }: GarageItemProps & any) => {
-  const [carStatus, setCarStatus] = useState<"started" | "finished" | "broken" | "initial" | "waiting">("initial");
-  const [driveDetails, setDriveDetails] = useState<{ velocity: number, distance: number }>({} as any);
+  }: GarageItemProps) => {
+  const [carStatus, setCarStatus] = useState<CarStatus>("initial");
+  const [driveDetails, setDriveDetails] = useState<DriveDetails>({} as DriveDetails);
   const [highwayWidth, setHighwayWidth] = useState<number>(0);
-  const [resetCar, setResetCar] = useState<boolean>(false);
-  const highway = useRef<any>();
+  const highway = useRef<HTMLDivElement>(null);
 
   const checkCarStatus = useCallback(async () => {
-    const checkOnResult: any = await checkOnCar(id);
+    const checkOnResult = await checkOnCar(id);
     if (!checkOnResult?.success) {
-      setCarStatus((curr:any) => {
-        if(curr !== "initial") return "broken";
+      setCarStatus(curr => {
+        if (curr !== "initial") return "broken";
         return curr;
-        });
+      });
     }
   }, [setCarStatus]);
 
@@ -83,10 +83,12 @@ const GarageItem = (
   }, [getStoppedStatus, setCarStatus, allRacing])
 
   useEffect(() => {
-    setHighwayWidth(highway.current.offsetWidth);
-    window.addEventListener("resize", ({ target }: Event) => {
+    if (highway.current) {
       setHighwayWidth(highway.current.offsetWidth);
-    })
+      window.addEventListener("resize", ({ target }: Event) => {
+        if (highway.current) setHighwayWidth(highway.current.offsetWidth);
+      })
+    }
   }, [setHighwayWidth, window])
 
   useEffect(() => {
@@ -106,7 +108,7 @@ const GarageItem = (
 
   useEffect(() => {
     if (carStatus === "finished" && allRacing === "started") {
-      setWinner((winner: any) => {
+      setWinner((winner: Winner) => {
         if (!winner) {
           return {
             id,
@@ -152,10 +154,7 @@ const GarageItem = (
           setStatus={setCarStatus}
           driveDetails={driveDetails}
           highwayWidth={highwayWidth}
-          resetCar={resetCar}
-          winner={setWinner}
           finishRace={finishRace}
-          setResetCar={setResetCar}
         />
         <p className={styles.garage_item__name}>
           {cutString(name, CAR_NAME_MAX_LENGTH)}

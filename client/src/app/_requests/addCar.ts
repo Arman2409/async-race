@@ -1,7 +1,8 @@
 import axiosInstance from "./utils/axiosInstance";
+import type { CarPayload } from "../_types/pages/garage/garage";
 
 const addCar = async (
-    car: any
+    car: CarPayload
 ) => {
     try {
         return axiosInstance.post(`/garage`, car)
