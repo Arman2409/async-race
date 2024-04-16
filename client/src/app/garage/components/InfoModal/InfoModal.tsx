@@ -1,5 +1,6 @@
 "use client"
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { PiTimer } from "react-icons/pi";
 import { motion } from "framer-motion";
 
@@ -19,9 +20,9 @@ const InfoModal = ({ winner, allRacing }: InfoModalProps) => {
     const [countdown, setCountdown] = useState<number>(START_RACE_TIMEOUT);
     const [showContent, setShowContent] = useState<"countdown" | "winner" | null>(null);
 
-    const countInterval = useRef<NodeJS.Timeout|string>("");
+    const countInterval = useRef<NodeJS.Timeout | string>("");
 
-    const addNewWinner = useCallback(async (winnerData:Winner) => {
+    const addNewWinner = useCallback(async (winnerData: Winner) => {
         const result = await addWinner(winnerData);
         if (result) {
             setShowContent("winner");
@@ -70,9 +71,11 @@ const InfoModal = ({ winner, allRacing }: InfoModalProps) => {
             </motion.h1>}
             {showContent === "winner" && (
                 <>
-                    <img 
-                     className={styles.show_modal__winner_img} 
-                     src="/winner.png" />
+                    <Image
+                        alt="Winner!"
+                        width={250}
+                        height={250}
+                        src="/winner.png" />
                     <CarIcon color={winner?.color} />
                     <p className={styles.show_modal__winner_name}>
                         {winner?.name}

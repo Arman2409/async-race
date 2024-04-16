@@ -12,3 +12,8 @@
         width: $logo_width;
     }
 }
+
+:export {
+    logo_width: $logo_width;
+    header_height: $header_height
+}

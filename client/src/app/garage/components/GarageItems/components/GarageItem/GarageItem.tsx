@@ -36,7 +36,7 @@ const GarageItem = (
         return curr;
       });
     }
-  }, [setCarStatus]);
+  }, [id, setCarStatus]);
 
   const startRace = useCallback(async (wait?: boolean) => {
     if ((carStatus !== "initial" && carStatus !== "waiting") && !wait) return;
@@ -55,9 +55,10 @@ const GarageItem = (
       }
       setDriveDetails(startResult);
     }
-  }, [setDriveDetails, checkCarStatus, setCarStatus])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, setDriveDetails, checkCarStatus, setCarStatus])
 
-  const getStoppedStatus = useCallback(async () => await updateCarStatus(id, "stopped"), [])
+  const getStoppedStatus = useCallback(async () => await updateCarStatus(id, "stopped"), [id])
 
   const finishRace = useCallback(async () => {
     const stoppedStatus = await getStoppedStatus();
@@ -89,7 +90,7 @@ const GarageItem = (
         if (highway.current) setHighwayWidth(highway.current.offsetWidth);
       })
     }
-  }, [setHighwayWidth, window])
+  }, [setHighwayWidth])
 
   useEffect(() => {
     switch (allRacing) {
@@ -120,7 +121,7 @@ const GarageItem = (
         return winner;
       })
     }
-  }, [carStatus, setAllRacing])
+  }, [id, name, carStatus, allRacing, color, driveDetails, highwayWidth, setAllRacing, setWinner])
 
   return (
     <div

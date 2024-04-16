@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, } from "react";
-import { FaTrophy } from "react-icons/fa6";
+import { FaChevronUp, FaTrophy} from "react-icons/fa6";
 
 import styles from "../../../_styles/pages/Winner/components/WinnersTable.module.scss";
 import getTableData from "../../../_requests/getTableData";
@@ -10,15 +10,17 @@ import type { Winner, WinnersTableProps } from "../../../_types/pages/winners/wi
 
 const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTableProps) => {
     const [loading, setLoading] = useState<boolean>(false);
+    const [sortByWins, setSortByWins] = useState<"desc" | "asc" | "default">("default");
+    const [sortByTime, setSortByTime] = useState<"desc" | "asc" | "default">("default");
 
     const getWinners = useCallback((async () => {
         setLoading(true);
-        let data = await getTableData("winners", currentPage);
-        data = await Promise.all(data.flatMap(async (winner:Winner) => {
+        let data = await getTableData("winners", currentPage, sortByWins, sortByTime,);
+        data = await Promise.all(data.flatMap(async (winner: Winner) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
                 const { name = "", color = "" } = { ...winnerDetails || {} };
-                if(!name) return [];
+                if (!name) return [];
                 return {
                     ...winner,
                     name,
@@ -27,10 +29,34 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTable
             }
             return winner;
         }))
-        data = data.flatMap((e:Winner) => e);
+        data = data.flatMap((e: Winner) => e);
         setWinnersData(data);
         setLoading(false);
-    }), [setWinnersData, currentPage, setLoading])
+    }), [setWinnersData, currentPage, setLoading, sortByTime, sortByWins])
+
+    const changeSortDetails = useCallback((column: "wins" | "time") => {
+        if (column === "wins") {
+            setSortByWins(curr => {
+                switch (curr) {
+                    case ("desc"): return "asc";
+                    case ("asc"): return "desc";
+                    case ("default"): return "asc";
+                }
+            });
+            setSortByTime("default")
+        }
+        if (column === "time") {
+            setSortByTime(curr => {
+                switch (curr) {
+                    case ("desc"): return "asc";
+                    case ("asc"): return "desc";
+                    case ("default"): return "desc";
+                }
+            });
+            setSortByWins("default")
+        }
+        getWinners();
+    }, [setSortByTime, setSortByWins, getWinners])
 
     useEffect(() => {
         getWinners();
@@ -47,9 +73,21 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTable
                     <tr>
                         <th>No</th>
                         <th>Car</th>
-                        <th>Car Name</th>
-                        <th>Wins</th>
-                        <th>Best Time</th>
+                        <th>Car Name </th>
+                        <th
+                            onClick={() => changeSortDetails("wins")}>
+                            Wins
+                            <FaChevronUp
+                                style={{ transform: `rotate(${sortByWins === "desc" ? 180 : 0}deg)` }}
+                            />
+                        </th>
+                        <th
+                            onClick={() => changeSortDetails("time")}>
+                            Best Time
+                            <FaChevronUp
+                                style={{ transform: `rotate(${sortByTime === "desc" ? 180 : 0}deg)` }}
+                            />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

@@ -15,6 +15,12 @@ const GarageInputs = () => {
 
     const { selected, setSelected, getGarageItems } = useContext(garageContext);
 
+    const cancelEdit = useCallback(() => {
+        setSelected(null);
+        setName("");
+        setColor(COLOR_INPUT_DEFAULT_COLOR);
+    }, [setSelected, setName, setColor])
+
     const submit = useCallback(async () => {
         if (selected) {
             const editResult = await editCar({
@@ -38,14 +44,7 @@ const GarageInputs = () => {
             setColor(COLOR_INPUT_DEFAULT_COLOR);
             getGarageItems && getGarageItems();
         }
-    }, [name, color, selected, setSelected, setName, getGarageItems]);
-
-    const cancelEdit = useCallback(() => {
-        setSelected(null);
-        setName("");
-        setColor(COLOR_INPUT_DEFAULT_COLOR);
-    }, [setSelected, setName, setColor])
-
+    }, [name, color, selected, setName, cancelEdit, getGarageItems]);
 
     useEffect(() => {
         if (selected) {

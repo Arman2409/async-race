@@ -17,7 +17,7 @@ const ItemActions = ({
         if (deleteResult) {
             updateItems && updateItems();
         }
-    }, [updateItems]);
+    }, [id, updateItems]);
 
     const selectCurrent = useCallback(() => {
         setSelected({
