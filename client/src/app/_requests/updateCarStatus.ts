@@ -1,6 +1,8 @@
 import axiosInstance from "./utils/axiosInstance"
 
-const updateCarStatus = async (id: string, status: string) => {
+const updateCarStatus = async (
+    id: string, 
+    status: string) => {
     try {
         return axiosInstance.patch("/engine", null, {
             params: {

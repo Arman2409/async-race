@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-import styles from "../../../../_styles/Header/components/Lights.module.scss";
+import styles from "../../../../_styles/components/Header/components/Lights.module.scss";
 import { HEADER_LIGHTS_RADIUS } from "../../../../_configs/components";
 import type { Light, LightProps } from "../../../../_types/components/header";
 

@@ -1,4 +1,4 @@
-import styles from "../../../_styles/shared/Button.module.scss";
+import styles from "../../../_styles/components/shared/Button.module.scss";
 import type { ButtonProps } from "../../../_types/components/shared/button";
 
 const Button = (

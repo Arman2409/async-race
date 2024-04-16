@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 
-import styles from "../../_styles/Header/Header.module.scss";
+import styles from "../../_styles/components/Header/Header.module.scss";
 import { WINDOW_LOAD_DELAY } from "../../_configs/global";
 import Loading from "../shared/Loading/Loading";
 import Lights from "./components/Lights/Lights";

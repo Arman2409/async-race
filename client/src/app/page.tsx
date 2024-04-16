@@ -1,7 +1,7 @@
 "use client"
 import { useCallback, useEffect, useState } from "react";
 
-import styles from "./_styles/Garage/Garage.module.scss";
+import styles from "./_styles/pages/Garage/Garage.module.scss";
 import getTableData from "./_requests/getTableData";
 import { garageContext } from "./_context/garage";
 import Pagination from "./_components/shared/Pagination/Pagination";

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MdOutlineStart, MdOutlineCancel } from "react-icons/md";
 
-import styles from "../../../../../_styles/Garage/components/GarageItems/components/GarageItem/GarageItem.module.scss";
+import styles from "../../../../../_styles/pages/Garage/components/GarageItems/components/GarageItem/GarageItem.module.scss";
 import { CAR_NAME_MAX_LENGTH } from "../../../../../_configs/garage";
 import updateCarStatus from "../../../../../_requests/updateCarStatus";
 import checkOnCar from "../../../../../_requests/checkOnCar";

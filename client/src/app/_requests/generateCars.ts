@@ -1,7 +1,7 @@
 import axiosInstance from "./utils/axiosInstance";
-import type { Car } from "../_types/pages/garage/garage";
+import type { CarPayload } from "../_types/pages/garage/garage";
 
-const generateCars = async (cars: Car[]) => {
+const generateCars = async (cars: CarPayload[]) => {
     try {
         let addStatus = true;
         cars.forEach(async car => {

@@ -2,7 +2,7 @@
 import { useCallback, useContext } from "react";
 import { MdOutlineStart, MdOutlineCancel } from "react-icons/md";
 
-import styles from "../../../_styles/Garage/components/GaaragActions/GarageActions.module.scss";
+import styles from "../../../_styles/pages/Garage/components/GaaragActions/GarageActions.module.scss";
 import { garageContext } from "../../../_context/garage";
 import { START_RACE_TIMEOUT } from "../../../_configs/garage";
 import generateCars from "../../../_requests/generateCars";

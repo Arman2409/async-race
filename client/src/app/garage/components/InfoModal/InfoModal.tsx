@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { PiTimer } from "react-icons/pi";
 import { motion } from "framer-motion";
 
-import styles from "../../../_styles/Garage/components/InfoModal.module.scss";
+import styles from "../../../_styles/pages/Garage/components/InfoModal.module.scss";
 import { SHOW_WINNER_TIME, START_RACE_TIMEOUT } from "../../../_configs/garage";
 import addWinner from "../../../_requests/addWinner";
 import CarIcon from "../../../_components/shared/CarIcon/CarIcon";

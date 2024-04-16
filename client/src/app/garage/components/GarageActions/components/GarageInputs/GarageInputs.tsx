@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useContext } from "react";
 import { LuPaintbrush2 } from "react-icons/lu";
 import { TbRestore } from "react-icons/tb";
 
-import styles from "../../../../../_styles/Garage/components/GaaragActions/GaragInputs/GarageInputs.module.scss";
+import styles from "../../../../../_styles/pages/Garage/components/GaaragActions/GaragInputs/GarageInputs.module.scss";
 import Button from "../../../../../_components/shared/Button/Button";
 import { garageContext } from "../../../../../_context/garage";
 import editCar from "@/app/_requests/editCar";

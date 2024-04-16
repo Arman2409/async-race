@@ -1,4 +1,4 @@
-import styles from "../../../_styles/shared/Loading/Loading.module.scss";
+import styles from "../../../_styles/components/shared/Loading/Loading.module.scss";
 import Fog from "../Fog/Fog";
 import Wheel from "./components/Wheel/Wheel";
 import type { LoadingProps } from "../../../_types/components/shared/loading/loading";

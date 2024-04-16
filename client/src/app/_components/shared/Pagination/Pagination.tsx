@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 
-import styles from "../../../_styles/shared/Pagination.module.scss";
+import styles from "../../../_styles/components/shared/Pagination.module.scss";
 import type { PaginationProps } from "../../../_types/components/shared/pagination";
 
 const Pagination = (

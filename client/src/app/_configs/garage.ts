@@ -6,6 +6,6 @@ export const START_RACE_TIMEOUT = 3;
 
 export const SHOW_WINNER_TIME = 2;
 
-export const GARAGE_PER_PAGE = 9;
+export const GARAGE_PER_PAGE = 7;
 
 export const CAR_NAME_MAX_LENGTH = 35;

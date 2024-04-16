@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion, useAnimationControls } from "framer-motion";
 
-import styles from "../../../../../../../_styles/Garage/components/GarageItems/components/GarageItem/components/Car/Car.module.scss";
+import styles from "../../../../../../../_styles/pages/Garage/components/GarageItems/components/GarageItem/components/Car/Car.module.scss";
 import CarIcon from "../../../../../../../_components/shared/CarIcon/CarIcon";
 import Fog from "../../../../../../../_components/shared/Fog/Fog";
 import type { CarProps } from "../../../../../../../_types/pages/garage/garage";

@@ -16,6 +16,8 @@ export type Car = {
     color: string
 }
 
+export type CarPayload = Omit<Car, "id">
+
 // props 
 export interface GarageItemsProps {
     getGarageItems: Function

@@ -1,0 +1,66 @@
+@import "../../../../../common/variables.scss";
+@import "../../../../../common/classes.scss";
+
+.actions_input_cont {
+   @extend .flex_center;
+
+   justify-content: space-between;
+   width: auto;
+   height: 40px;
+
+   &__cancel_edit {
+      font-size: 20px;
+      margin: 5px;
+      color: $blue_light;
+      cursor: pointer;
+   }
+
+   .actions_input {
+      height: 100%;
+      width: 200px;
+      background-color: $blue_light;
+      color: $black_main;
+      padding: 5px;
+   }
+
+   .actions_color_input_cont {
+      position: relative;
+      height: 30px;
+      width: 30px;
+      margin-right: 10px;
+
+      &__icon {
+         position: absolute;
+         color: $blue_main;
+         left: calc(50% - 7.5px);
+         top: calc(50% - 7.5px);
+         font-size: 15px;
+         pointer-events: none;
+      }
+
+      .actions_color_input {
+         height: 100%;
+         width: 100%;
+         cursor: pointer;
+         -webkit-appearanc: none;
+         -moz-appearance: none;
+         appearance: none;
+         border: none;
+         appearance: none;
+         background-color: transparent;
+
+         &::-moz-color-swatch {
+            border: none;
+         }
+
+         &::-webkit-color-swatch-wrapper {
+            padding: 0;
+         }
+
+         &::-webkit-color-swatch {
+            border: none;
+         }
+      }
+   }
+
+}
