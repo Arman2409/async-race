@@ -28,16 +28,16 @@ const ItemActions = ({
     }, [id, name, color, setSelected]);
 
     return (
-    <div className={styles.actions_cont}>
-        <Button
-            text="Select"
-            type="update"
-            onClick={selectCurrent} />
-        <Button
-            text="Remove"
-            type="delete"
-            onClick={deleteCurrent} />
-    </div>
+        <div className={styles.actions_cont}>
+            <Button
+                text="Select"
+                type="update"
+                onClick={selectCurrent} />
+            <Button
+                text="Remove"
+                type="delete"
+                onClick={deleteCurrent} />
+        </div>
     )
 }
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, } from "react";
-import { FaChevronUp, FaTrophy} from "react-icons/fa6";
+import { FaChevronUp, FaTrophy } from "react-icons/fa6";
 
 import styles from "../../../_styles/pages/Winner/components/WinnersTable.module.scss";
 import getTableData from "../../../_requests/getTableData";
@@ -15,7 +15,7 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTable
 
     const getWinners = useCallback((async () => {
         setLoading(true);
-        let data = await getTableData("winners", currentPage, sortByWins, sortByTime,);
+        let data = await getTableData("winners", currentPage, sortByWins, sortByTime);
         data = await Promise.all(data.flatMap(async (winner: Winner) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
@@ -32,7 +32,7 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTable
         data = data.flatMap((e: Winner) => e);
         setWinnersData(data);
         setLoading(false);
-    }), [setWinnersData, currentPage, setLoading, sortByTime, sortByWins])
+    }), [currentPage, setLoading, sortByTime, sortByWins])
 
     const changeSortDetails = useCallback((column: "wins" | "time") => {
         if (column === "wins") {
@@ -50,7 +50,7 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTable
                 switch (curr) {
                     case ("desc"): return "asc";
                     case ("asc"): return "desc";
-                    case ("default"): return "desc";
+                    case ("default"): return "asc";
                 }
             });
             setSortByWins("default")
@@ -78,14 +78,16 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTable
                             onClick={() => changeSortDetails("wins")}>
                             Wins
                             <FaChevronUp
-                                style={{ transform: `rotate(${sortByWins === "desc" ? 180 : 0}deg)` }}
+                                className={styles.winners_table_cont__sort_icon}
+                                style={{ transform: `rotate(${(sortByWins === "desc" || sortByWins === "default") ? 180 : 0}deg)` }}
                             />
                         </th>
                         <th
                             onClick={() => changeSortDetails("time")}>
                             Best Time
                             <FaChevronUp
-                                style={{ transform: `rotate(${sortByTime === "desc" ? 180 : 0}deg)` }}
+                                className={styles.winners_table_cont__sort_icon}
+                                style={{ transform: `rotate(${(sortByTime === "desc" || sortByTime === "default") ? 180 : 0}deg)` }}
                             />
                         </th>
                     </tr>
@@ -93,7 +95,7 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTable
                 <tbody>
                     {winnersData.map(({ id, name, color, wins, time }, index) => (
                         <tr
-                            key={id}
+                            key={index}
                             className={styles[`winners_table_cont__table__row_${index % 3 + 1}`]}>
                             <td style={{
                                 position: currentPage === 1 && index < 3 ? 'relative' : 'static',

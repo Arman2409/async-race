@@ -9,14 +9,14 @@ const Pagination = (
     current = 1,
     opacity = 1,
     setCurrent,
-    perPage = 8,
-    itemsCount = 8,
+    perPage = 7,
+    itemsCount = 7,
   }: PaginationProps) => {
   const [disabledLeft, setDisabledLeft] = useState<boolean>(true);
   const [disabledRight, setDisabledRight] = useState<boolean>(false);
 
   const changePage = useCallback((direction: "next" | "prev") => {
-      setCurrent((curr: number) => direction === "prev" ? curr -= 1 : curr += 1)
+    setCurrent((curr: number) => direction === "prev" ? curr -= 1 : curr += 1)
   }, [setCurrent])
 
   useEffect(() => {
