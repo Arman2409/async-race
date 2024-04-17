@@ -2,6 +2,11 @@
 
 .lights {
    width: calc(50% -  $logo_width / 2);
+
+   &__canvas {
+      width: 100%;
+      height: 100%;
+   }
 }
 
 :export {

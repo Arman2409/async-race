@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, } from "react";
 import { FaChevronUp, FaTrophy } from "react-icons/fa6";
 
 import styles from "../../../_styles/pages/Winner/components/WinnersTable.module.scss";
+import { COLOR_INPUT_DEFAULT_COLOR } from "../../../_configs/garage";
 import getTableData from "../../../_requests/getTableData";
 import getWinnerDetails from "../../../_requests/getWinnerDetails";
 import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
@@ -15,25 +16,23 @@ const WinnersTable = ({ currentPage, setTotal, winnersData, setWinnersData }: Wi
 
     const getWinners = useCallback((async () => {
         setLoading(true);
-        const {data = [], total = 0} = await getTableData("winners", currentPage, sortByWins, sortByTime);
+        const { data = [], total = 0 } = await getTableData("winners", currentPage, sortByWins, sortByTime);
         setTotal(total);
         const winnerDetailsPromises = await Promise.all(data.flatMap(async (winner: Winner) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
                 const { name = "", color = "" } = { ...winnerDetails || {} };
-                if (!name) return [];
                 return {
                     ...winner,
-                    name,
-                    color
+                    name: name || "...Car deleted...",
+                    color: COLOR_INPUT_DEFAULT_COLOR
                 }
             }
             return winner;
         }))
-        const detailsData = winnerDetailsPromises.flatMap((e: Winner) => e);
-        setWinnersData(detailsData);
+        setWinnersData(winnerDetailsPromises);
         setLoading(false);
-    }), [currentPage, setTotal, setLoading, sortByTime, sortByWins])
+    }), [currentPage, setWinnersData, setTotal, setLoading, sortByTime, sortByWins])
 
     const changeSortDetails = useCallback((column: "wins" | "time") => {
         if (column === "wins") {
@@ -105,7 +104,11 @@ const WinnersTable = ({ currentPage, setTotal, winnersData, setWinnersData }: Wi
                                     && <FaTrophy className={styles[`winners_table_cont__table__trophy_${index + 1}`]} />}
                                 {id || "N/n"}
                             </td>
-                            <td><CarIcon color={color} /> </td>
+                            <td>
+                                <div className={styles.winners_table_cont__table__car_icon}>
+                                    <CarIcon color={color} />
+                                </div>
+                            </td>
                             <td>{name || "N/n"}</td>
                             <td>{wins || "N/n"}</td>
                             <td>{time || "N/n"}</td>
