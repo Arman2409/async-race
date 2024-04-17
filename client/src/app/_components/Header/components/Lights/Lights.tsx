@@ -76,7 +76,7 @@ const Lights = ({ position }: LightProps) => {
 
         initLights();
         animate();
-    }, [])
+    }, [position])
 
     return (
         <div

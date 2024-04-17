@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import styles from "./_styles/pages/Garage/Garage.module.scss";
+import { GARAGE_PER_PAGE } from "./_configs/garage";
 import getTableData from "./_requests/getTableData";
 import { garageContext } from "./_context/garage";
 import Pagination from "./_components/shared/Pagination/Pagination";
@@ -59,7 +60,7 @@ const Garage = () => {
           <Pagination
             current={currentPage}
             setCurrent={setCurrentPage}
-            perPage={8}
+            perPage={GARAGE_PER_PAGE}
             itemsCount={garageItems.length}
           />
         </div>

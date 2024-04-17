@@ -28,7 +28,7 @@ const Car = ({
                 .then(() => finishRace());
         }
 
-    }, [controls, driveDetails, highwayWidth, setStatus, status])
+    }, [controls, driveDetails, highwayWidth, setStatus, status, finishRace])
 
     useEffect(() => {
         if (status === "initial" || status === "waiting") {

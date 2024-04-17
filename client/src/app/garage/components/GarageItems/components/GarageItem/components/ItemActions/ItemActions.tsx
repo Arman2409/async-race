@@ -17,7 +17,7 @@ const ItemActions = ({
         if (deleteResult) {
             updateItems && updateItems();
         }
-    }, [updateItems]);
+    }, [id, updateItems]);
 
     const selectCurrent = useCallback(() => {
         setSelected({
@@ -28,16 +28,16 @@ const ItemActions = ({
     }, [id, name, color, setSelected]);
 
     return (
-    <div className={styles.actions_cont}>
-        <Button
-            text="Select"
-            type="update"
-            onClick={selectCurrent} />
-        <Button
-            text="Remove"
-            type="delete"
-            onClick={deleteCurrent} />
-    </div>
+        <div className={styles.actions_cont}>
+            <Button
+                text="Select"
+                type="update"
+                onClick={selectCurrent} />
+            <Button
+                text="Remove"
+                type="delete"
+                onClick={deleteCurrent} />
+        </div>
     )
 }
 

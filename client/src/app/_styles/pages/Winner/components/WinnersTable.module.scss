@@ -2,7 +2,13 @@
 
 .winners_table_cont {
     width: 100%;
-    height: 90%;
+    height: auto;
+
+    &__sort_icon {
+        position: absolute;
+        right: 0px;
+        cursor: pointer;
+    }
 
     &__table {
         width: 100%;
@@ -47,6 +53,7 @@
             font-size: 22px;
             padding: 10px;
             color: $grey_main;
+            position: relative;
         }
 
         td {

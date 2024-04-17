@@ -15,14 +15,12 @@ const GarageActions = () => {
     const generateNewCars = useCallback(async () => {
         const newCars = generateRandomCarObjects();
         const generateResult = await generateCars(newCars);
-        if (generateResult) {
-            getGarageItems();
-        }
+        if (generateResult) getGarageItems();
     }, [getGarageItems])
 
     const cancelRace = useCallback(() => {
         setAllRacing("cancel");
-        setTimeout(() =>  setAllRacing("initial"), 1000);
+        setTimeout(() => setAllRacing("initial"), 1000);
     }, [setAllRacing])
 
     const startRace = useCallback(() => {
@@ -46,9 +44,9 @@ const GarageActions = () => {
                     className={styles.garage_actions__buttons_container__finish}
                     onClick={cancelRace} />
             </div>
-            <Button 
-              text="Generate"
-              onClick={generateNewCars}/>
+            <Button
+                text="Generate"
+                onClick={generateNewCars} />
             <GarageInputs />
         </div>
     )

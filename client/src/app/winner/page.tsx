@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 import styles from "../_styles/pages/Winner/Winner.module.scss";
+import { WINNER_PER_PAGE } from "../_configs/winners";
 import WinnersTable from "./_components/WinnersTable/WinnersTable";
 import Pagination from "../_components/shared/Pagination/Pagination";
 import type { Winner } from "../_types/pages/winners/winner";
@@ -21,7 +22,7 @@ const Winner = () => {
                 setCurrent={setCurrentPage}
                 opacity={0.85}
                 itemsCount={winnersData.length}
-                perPage={8}
+                perPage={WINNER_PER_PAGE}
             />
         </div>
     )

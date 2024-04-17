@@ -15,8 +15,14 @@ const GarageInputs = () => {
 
     const { selected, setSelected, getGarageItems } = useContext(garageContext);
 
+    const cancelEdit = useCallback(() => {
+        setSelected(null);
+        setName("");
+        setColor(COLOR_INPUT_DEFAULT_COLOR);
+    }, [setSelected, setName, setColor])
+
     const submit = useCallback(async () => {
-        if (selected) {
+        if (selected?.name) {
             const editResult = await editCar({
                 id: selected.id,
                 color,
@@ -38,17 +44,10 @@ const GarageInputs = () => {
             setColor(COLOR_INPUT_DEFAULT_COLOR);
             getGarageItems && getGarageItems();
         }
-    }, [name, color, selected, setSelected, setName, getGarageItems]);
-
-    const cancelEdit = useCallback(() => {
-        setSelected(null);
-        setName("");
-        setColor(COLOR_INPUT_DEFAULT_COLOR);
-    }, [setSelected, setName, setColor])
-
+    }, [name, color, selected, setName, cancelEdit, getGarageItems]);
 
     useEffect(() => {
-        if (selected) {
+        if (selected?.name) {
             setColor(selected?.color || COLOR_INPUT_DEFAULT_COLOR)
             setName(selected?.name)
         }
@@ -56,7 +55,7 @@ const GarageInputs = () => {
 
     return (
         <div  className={styles.actions_input_cont}>
-            {selected && <TbRestore
+            {selected?.name && <TbRestore
                 className={styles.actions_input_cont__cancel_edit}
                 onClick={cancelEdit} />}
             <input
@@ -77,7 +76,7 @@ const GarageInputs = () => {
             </div>
             <Button
                 disabled={!name}
-                text={selected ? "Edit" : "Add"}
+                text={selected?.name ? "Edit" : "Add"}
                 onClick={submit} />
         </div>
     )
