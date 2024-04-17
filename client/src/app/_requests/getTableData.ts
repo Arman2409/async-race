@@ -23,13 +23,19 @@ const getTableData = async (
     try {
         return axiosInstance.get(`/${forTable}`, {
             params
-        }).then(({ data }) => data)
-            .catch(({ message }) => {
-                console.error(message || "Error occured");
-            })
+        }).then(({ data, headers }) => {
+            return {
+                data: data || [],
+                total: headers["x-total-count"] || 0,
+            }
+        })
     } catch (err) {
         const { message = "Error occured while fetching" } = { ...err || {} }
         console.error(message)
+        return {
+            data: [],
+            total: []
+        }
     }
 }
 

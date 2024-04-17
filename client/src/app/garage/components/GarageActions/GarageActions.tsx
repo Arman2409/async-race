@@ -43,10 +43,10 @@ const GarageActions = () => {
                 <MdOutlineCancel
                     className={styles.garage_actions__buttons_container__finish}
                     onClick={cancelRace} />
+                <Button
+                    text="Generate"
+                    onClick={generateNewCars} />
             </div>
-            <Button
-                text="Generate"
-                onClick={generateNewCars} />
             <GarageInputs />
         </div>
     )

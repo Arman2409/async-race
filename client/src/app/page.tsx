@@ -20,13 +20,15 @@ const Garage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [garageItems, setGarageItems] = useState<Car[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [total, setTotal] = useState<number>(0);
 
   const getGarageItems = useCallback(async () => {
     setLoading(true);
-    const garageItemsData = await getTableData("garage", currentPage);
-    setGarageItems(garageItemsData || []);
+    const {data, total: totalItems} = await getTableData("garage", currentPage);
+    setTotal(totalItems);
+    setGarageItems(data || []);
     setLoading(false)
-  }, [currentPage, setGarageItems, setLoading])
+  }, [currentPage, setTotal, setGarageItems, setLoading])
 
   useEffect(() => {
     getGarageItems();
@@ -61,6 +63,7 @@ const Garage = () => {
             current={currentPage}
             setCurrent={setCurrentPage}
             perPage={GARAGE_PER_PAGE}
+            total={total}
             itemsCount={garageItems.length}
           />
         </div>

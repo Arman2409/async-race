@@ -8,15 +8,16 @@ import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
 import Loading from "../../../_components/shared/Loading/Loading";
 import type { Winner, WinnersTableProps } from "../../../_types/pages/winners/winner";
 
-const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTableProps) => {
+const WinnersTable = ({ currentPage, setTotal, winnersData, setWinnersData }: WinnersTableProps) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [sortByWins, setSortByWins] = useState<"desc" | "asc" | "default">("default");
     const [sortByTime, setSortByTime] = useState<"desc" | "asc" | "default">("default");
 
     const getWinners = useCallback((async () => {
         setLoading(true);
-        let data = await getTableData("winners", currentPage, sortByWins, sortByTime);
-        data = await Promise.all(data.flatMap(async (winner: Winner) => {
+        const {data = [], total = 0} = await getTableData("winners", currentPage, sortByWins, sortByTime);
+        setTotal(total);
+        const winnerDetailsPromises = await Promise.all(data.flatMap(async (winner: Winner) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
                 const { name = "", color = "" } = { ...winnerDetails || {} };
@@ -29,10 +30,10 @@ const WinnersTable = ({ currentPage, winnersData, setWinnersData }: WinnersTable
             }
             return winner;
         }))
-        data = data.flatMap((e: Winner) => e);
-        setWinnersData(data);
+        const detailsData = winnerDetailsPromises.flatMap((e: Winner) => e);
+        setWinnersData(detailsData);
         setLoading(false);
-    }), [currentPage, setLoading, sortByTime, sortByWins])
+    }), [currentPage, setTotal, setLoading, sortByTime, sortByWins])
 
     const changeSortDetails = useCallback((column: "wins" | "time") => {
         if (column === "wins") {
