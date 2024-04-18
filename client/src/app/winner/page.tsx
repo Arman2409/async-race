@@ -16,7 +16,7 @@ const Winner = () => {
         <div className={styles.winner}>
             <WinnersTable
                 currentPage={currentPage}
-                winnersData={winnersData}
+                winners={winnersData}
                 setTotal={setTotal}
                 setWinnersData={setWinnersData} />
             <Pagination

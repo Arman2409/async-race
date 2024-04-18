@@ -1,10 +1,10 @@
 "use client"
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import styles from "./_styles/pages/Garage/Garage.module.scss";
 import { GARAGE_PER_PAGE } from "./_configs/garage";
-import getTableData from "./_requests/getTableData";
 import { garageContext } from "./_context/garage";
+import getTableData from "./_requests/getTableData";
 import Pagination from "./_components/shared/Pagination/Pagination";
 import GarageActions from "./garage/components/GarageActions/GarageActions";
 import GarageItems from "./garage/components/GarageItems/GarageItems";
@@ -21,6 +21,9 @@ const Garage = () => {
   const [garageItems, setGarageItems] = useState<Car[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
+  const [readyCars, setReadyCars] = useState<string[]>([]);
+
+  const allReady = useMemo(() => readyCars.length === garageItems.length, [readyCars, garageItems]);
 
   const getGarageItems = useCallback(async () => {
     setLoading(true);
@@ -40,6 +43,8 @@ const Garage = () => {
       winner,
       allRacing,
       selected,
+      allReady,
+      setReadyCars,
       setAllRacing,
       setWinner,
       setSelected,
@@ -48,6 +53,7 @@ const Garage = () => {
       <>
         <InfoModal
           winner={winner}
+          allReady={allReady}
           allRacing={allRacing}
         />
         <div className={styles.garage}>

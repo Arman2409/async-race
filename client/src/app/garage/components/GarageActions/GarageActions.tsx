@@ -1,17 +1,17 @@
 "use client"
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { MdOutlineStart, MdOutlineCancel } from "react-icons/md";
 
 import styles from "../../../_styles/pages/Garage/components/GaaragActions/GarageActions.module.scss";
 import { garageContext } from "../../../_context/garage";
-import { START_RACE_TIMEOUT } from "../../../_configs/garage";
 import generateCars from "../../../_requests/generateCars";
+import generateRandomCarObjects from "./functions/generateRandomCarObjects";
 import GarageInputs from "./components/GarageInputs/GarageInputs";
 import Button from "../../../_components/shared/Button/Button";
-import generateRandomCarObjects from "./functions/generateRandomCarObjects";
+import type { AllRacing } from "../../../_types/pages/garage/garage";
 
 const GarageActions = () => {
-    const { allRacing, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);
+    const { allRacing, allReady, setReadyCars, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);
     const generateNewCars = useCallback(async () => {
         const newCars = generateRandomCarObjects();
         const generateResult = await generateCars(newCars);
@@ -20,16 +20,20 @@ const GarageActions = () => {
 
     const cancelRace = useCallback(() => {
         setAllRacing("cancel");
-        setTimeout(() => setAllRacing("initial"), 1000);
+        setTimeout(() => setAllRacing("initial"), 5000);
+        setReadyCars([]);
     }, [setAllRacing])
 
     const startRace = useCallback(() => {
-        setAllRacing("ready");
+        setAllRacing((curr:AllRacing) => curr === "initial" ? "ready" : curr);
         setWinner(null);
-        setTimeout(() => {
-            setAllRacing("started");
-        }, START_RACE_TIMEOUT * 1000);
     }, [setAllRacing, setWinner])
+
+    useEffect(() => {
+        if(allReady && allRacing == "ready") {
+            setAllRacing("started");
+        }
+    }, [allReady, allRacing, setAllRacing])
 
     return (
         <div className={styles.garage_actions}>
@@ -37,7 +41,7 @@ const GarageActions = () => {
                 <MdOutlineStart
                     className={styles.garage_actions__buttons_container__start}
                     style={{
-                        color: allRacing === "ready" || allRacing === "started" ? "green" : "",
+                        color: allRacing !== "initial" ? "green" : "",
                     }}
                     onClick={startRace} />
                 <MdOutlineCancel

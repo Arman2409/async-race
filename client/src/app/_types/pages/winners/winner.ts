@@ -12,5 +12,10 @@ export interface WinnersTableProps {
     currentPage: number
     setWinnersData: Function
     setTotal: Function
-    winnersData: Winner[]
+    winners: Winner[]
+}
+
+export interface WinnersTableBodyProps {
+  currentPage: number
+  winners: Winner[]
 }

@@ -21,6 +21,7 @@ const GarageItem = (
     setSelected,
     allRacing,
     setWinner,
+    setReadyCars,
     setAllRacing
   }: GarageItemProps) => {
   const [carStatus, setCarStatus] = useState<CarStatus>("initial");
@@ -32,8 +33,8 @@ const GarageItem = (
     const checkOnResult = await checkOnCar(id);
     if (!checkOnResult?.success) {
       setCarStatus(curr => {
-        if (curr !== "initial") return "broken";
-        return curr;
+        if (curr === "initial" || curr === "waiting") return curr;
+        return "broken";
       });
     }
   }, [id, setCarStatus]);
@@ -49,6 +50,7 @@ const GarageItem = (
     if (startResult) {
       if (wait) {
         setCarStatus("waiting");
+        setReadyCars((curr:string[]) => curr.concat(id));
       } else {
         setCarStatus("started");
         checkCarStatus();
@@ -81,7 +83,7 @@ const GarageItem = (
       }
       setCarStatus("initial");
     }
-  }, [getStoppedStatus, setCarStatus, allRacing])
+  }, [getStoppedStatus, setCarStatus, startRace, allRacing])
 
   useEffect(() => {
     if (highway.current) {
