@@ -1,17 +1,31 @@
 @import "../../common/variables.scss";
+@import "../../common/classes.scss";
 
 .pagination {
     width: 100%;
     height: 40px;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
+
+    &__total {
+        @extend .flex_center;
+
+        width: auto;
+        padding: 0px 5px;
+        height: 25px;
+        font-size: 20px;
+        color: $blue_main;
+        border: 1px solid $blue_main;
+        border-radius: 50%;
+    }
 
     &__content {
         width: auto;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        background-color: $grey_main;
+        background-color: $blue_light;
 
         &__arrow {
             cursor: pointer;

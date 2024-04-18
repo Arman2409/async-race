@@ -1,0 +1,31 @@
+@import "../../../../common/variables.scss";
+
+.winners_table_cont {
+    width: 100%;
+    height: auto;
+
+    &__sort_icon {
+        position: absolute;
+        right: 0px;
+        cursor: pointer;
+    }
+
+    &__table {
+        width: 100%;
+        height: auto;
+        border-collapse: collapse;
+
+        th {
+            font-size: 22px;
+            padding: 10px;
+            color: $grey_main;
+            position: relative;
+        }
+
+        td {
+            height: 35px;
+            text-align: center;
+            color: $black_main;
+        }
+    }
+}

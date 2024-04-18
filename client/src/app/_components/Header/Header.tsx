@@ -11,11 +11,8 @@ const Header = () => {
   const [showLoading, setShowLoading] = useState<boolean>(true);
 
   useEffect(() => {
-      window.onload = () => {
-        setTimeout(() => setShowLoading(false), WINDOW_LOAD_DELAY * 1000)
-      }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setShowLoading, window])
+    setTimeout(() => setShowLoading(false), WINDOW_LOAD_DELAY * 1000)
+  }, [setShowLoading])
 
   return (
     <div

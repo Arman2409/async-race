@@ -9,7 +9,7 @@ import type { GarageItemsProps } from "../../../_types/pages/garage/garage";
 const GarageItems = (
     { garageItems,
         getGarageItems }: GarageItemsProps) => {
-    const { setSelected, allRacing, setWinner, setAllRacing } = useContext(garageContext)
+    const { setSelected, allRacing, setWinner, setReadyCars, setAllRacing } = useContext(garageContext)
 
     return (
         <div className={styles.garage_items}>
@@ -19,6 +19,7 @@ const GarageItems = (
                     setSelected={setSelected}
                     allRacing={allRacing}
                     setWinner={setWinner}
+                    setReadyCars={setReadyCars}
                     isLast={index === garageItems.length - 1}
                     setAllRacing={setAllRacing}
                     updateItems={getGarageItems}

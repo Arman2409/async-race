@@ -10,6 +10,7 @@ const Pagination = (
     opacity = 1,
     setCurrent,
     perPage = 7,
+    total = 0,
     itemsCount = 7,
   }: PaginationProps) => {
   const [disabledLeft, setDisabledLeft] = useState<boolean>(true);
@@ -28,6 +29,9 @@ const Pagination = (
     <div
       className={styles.pagination}
     >
+      <div className={styles.pagination__total}>
+        {total}
+      </div>
       <div
         className={styles.pagination__content}
         style={{ opacity }} >

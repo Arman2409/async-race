@@ -11,5 +11,11 @@ export interface Winner extends Car {
 export interface WinnersTableProps {
     currentPage: number
     setWinnersData: Function
-    winnersData: Winner[]
+    setTotal: Function
+    winners: Winner[]
+}
+
+export interface WinnersTableBodyProps {
+  currentPage: number
+  winners: Winner[]
 }

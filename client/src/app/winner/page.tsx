@@ -10,17 +10,20 @@ import type { Winner } from "../_types/pages/winners/winner";
 const Winner = () => {
     const [winnersData, setWinnersData] = useState<Winner[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [total, setTotal] = useState<number>(0);
 
     return (
         <div className={styles.winner}>
             <WinnersTable
                 currentPage={currentPage}
-                winnersData={winnersData}
+                winners={winnersData}
+                setTotal={setTotal}
                 setWinnersData={setWinnersData} />
             <Pagination
                 current={currentPage}
                 setCurrent={setCurrentPage}
                 opacity={0.85}
+                total={total}
                 itemsCount={winnersData.length}
                 perPage={WINNER_PER_PAGE}
             />

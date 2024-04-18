@@ -85,6 +85,7 @@ const Lights = ({ position }: LightProps) => {
         >
             <canvas
                 id={`lights_canvas_${position}`}
+                className={styles.lights__canvas}
             />
         </div>
     )

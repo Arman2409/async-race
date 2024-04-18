@@ -30,6 +30,7 @@ export interface GarageItemProps {
     name: string
     color: string
     allRacing: AllRacing
+    setReadyCars: Function
     updateItems: Function
     setSelected: Function
     setWinner: Function
@@ -59,6 +60,7 @@ export interface CarProps {
 }
 
 export interface InfoModalProps {
+    allReady: boolean
     winner: Winner
     allRacing: AllRacing
 }
