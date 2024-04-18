@@ -1,0 +1,116 @@
+@import "../../common/variables.scss";
+
+.button {
+    width: 120px;
+    height: 30px;
+    margin-right: 10px;
+    transition: 0.5s;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    color: $orange_main;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+
+    &__active {
+        @extend .button;
+
+        text-decoration: underline;
+        font-size: 20px;
+    }
+
+    &__action {
+        @extend .button;
+        color: $black_main;
+        font-size: 13px;
+        width: 70px;
+
+        &:hover {
+            font-size: 13px !important;
+        }
+    }
+
+    &__update {
+        @extend .button__action;
+
+        &:after {
+            background-color: $orange_main !important;
+        }
+    }
+
+    &__delete {
+        @extend .button__action;
+        margin-right: 0px;
+
+        &:after {
+            background-color: $red_main !important;
+        }
+    }
+
+    // container for getting the gradient border effect
+    &:before {
+        content: "";
+        background: linear-gradient(45deg,
+                $blue_main,
+                $red_main,
+                $grey_main);
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        transition: opacity 0.3s ease-in-out;
+        border-radius: 10px;
+    }
+
+    // central container of the button with black background 
+    &:after {
+        z-index: -1;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: $black_main;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+
+    &:hover {
+        font-size: 22px;
+
+        @keyframes glowing-button-85 {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 400% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        &:before {
+            animation: glowing-button-85 10s linear infinite;
+        }
+    }
+
+    &__disabled {
+       font-size: 16px;
+       opacity: 0.6;
+       cursor: default;
+
+       &:hover {
+        font-size: 16px;
+       }
+    }
+}

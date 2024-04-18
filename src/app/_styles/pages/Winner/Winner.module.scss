@@ -1,0 +1,14 @@
+@import "../../common/variables.scss";
+@import "../../common/classes.scss";
+
+
+.winner {
+    @extend .flex_center;
+
+    width: 80%;
+    height: auto;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0px auto;
+}

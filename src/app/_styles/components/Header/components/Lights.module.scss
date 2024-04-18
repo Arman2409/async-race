@@ -1,0 +1,15 @@
+@import "../../../common/variables.scss";
+
+.lights {
+   width: calc(50% -  $logo_width / 2);
+
+   &__canvas {
+      width: 100%;
+      height: 100%;
+   }
+}
+
+:export {
+   red_main: $red_main;
+   blue_main: $blue_main;
+}

@@ -1,0 +1,8 @@
+@import "../../../../../../../common/classes.scss";
+
+.actions_cont {
+    @extend .flex_evenly;
+
+    width: 120px;
+    height: 100%;
+}
