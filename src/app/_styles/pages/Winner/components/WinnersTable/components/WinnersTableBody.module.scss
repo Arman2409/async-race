@@ -1,0 +1,43 @@
+@import "../../../../../common/variables.scss";
+
+.winners_table_body {
+    &__row {
+        &_1 {
+            background-color: rgba($blue_light, 0.85);
+        }
+
+        &_2 {
+            background-color: rgba($red_main, 0.85);
+        }
+
+        &_3 {
+            background-color: rgba($grey_main, 0.85);
+        }
+    }
+
+    &__car_icon {
+        width: 50px;
+        margin: 0 auto;
+    }
+
+    &__trophy {
+        position: absolute;
+        left: 15px;
+
+        &_1 {
+            @extend .winners_table_body__trophy;
+            color: gold;
+        }
+
+        &_2 {
+            @extend .winners_table_body__trophy;
+            color: silver;
+        }
+
+        &_3 {
+            @extend .winners_table_body__trophy;
+            color: brown;
+        }
+    }
+
+}
