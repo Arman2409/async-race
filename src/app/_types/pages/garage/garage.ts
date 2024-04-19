@@ -33,6 +33,7 @@ export interface GarageItemProps {
     setReadyCars: Function
     updateItems: Function
     setSelected: Function
+    setStoppedCars: Function
     setWinner: Function
     setAllRacing: Function
 }

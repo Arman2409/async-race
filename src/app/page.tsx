@@ -6,9 +6,9 @@ import { GARAGE_PER_PAGE } from "./_configs/garage";
 import { garageContext } from "./_context/garage";
 import getTableData from "./_requests/getTableData";
 import Pagination from "./_components/shared/Pagination/Pagination";
-import GarageActions from "./garage/components/GarageActions/GarageActions";
-import GarageItems from "./garage/components/GarageItems/GarageItems";
-import InfoModal from "./garage/components/InfoModal/InfoModal";
+import GarageActions from "./garage/_components/GarageActions/GarageActions";
+import GarageItems from "./garage/_components/GarageItems/GarageItems";
+import InfoModal from "./garage/_components/InfoModal/InfoModal";
 import Loading from "./_components/shared/Loading/Loading";
 import type { Car } from "./_types/pages/garage/garage";
 import type { Winner } from "./_types/pages/winners/winner";
@@ -22,12 +22,14 @@ const Garage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [readyCars, setReadyCars] = useState<string[]>([]);
+  const [stoppedCars, setStoppedCars] = useState<string[]>([]);
 
   const allReady = useMemo(() => readyCars.length === garageItems.length, [readyCars, garageItems]);
+  const allStopped = useMemo(() => stoppedCars.length === garageItems.length, [stoppedCars, garageItems]);
 
   const getGarageItems = useCallback(async () => {
     setLoading(true);
-    const {data, total: totalItems} = await getTableData("garage", currentPage);
+    const { data, total: totalItems } = await getTableData("garage", currentPage);
     setTotal(totalItems);
     setGarageItems(data || []);
     setLoading(false)
@@ -38,17 +40,25 @@ const Garage = () => {
     setAllRacing("initial");
   }, [currentPage, getGarageItems]);
 
+  useEffect(() => {
+    if (allRacing === "cancel") {
+      setStoppedCars([]);
+    }
+  }, [allRacing, setStoppedCars])
+
   return (
     <garageContext.Provider value={{
       winner,
       allRacing,
       selected,
       allReady,
+      allStopped,
       setReadyCars,
       setAllRacing,
       setWinner,
       setSelected,
       getGarageItems,
+      setStoppedCars
     }}>
       <>
         <InfoModal

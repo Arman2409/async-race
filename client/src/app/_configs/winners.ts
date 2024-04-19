@@ -1,1 +1,0 @@
-export const WINNER_PER_PAGE = 10;

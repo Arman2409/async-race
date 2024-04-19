@@ -1,9 +1,9 @@
 import axios from "axios";
 
-import { SERVER_URL } from "../../_configs/global";
+const baseURL = process.env.NEXT_PUBLIC_SERVER_URL ||  process.env.SERVER_URL;
 
 const axiosInstance = axios.create({
-  baseURL: SERVER_URL,
+  baseURL
 })
 
 export default axiosInstance;

@@ -3,6 +3,8 @@ import type { Winner } from "../pages/winners/winner"
 
 export interface GarageContext {
     allReady: boolean
+    allStopped: boolean
+    setStoppedCars: Function
     winner: Winner
     selected: Car
     allRacing: AllRacing

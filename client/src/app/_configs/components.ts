@@ -1,1 +1,0 @@
-export const HEADER_LIGHTS_RADIUS = 5;
