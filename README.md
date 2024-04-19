@@ -2,71 +2,75 @@
 
 Car racing stimulation
 
+# UI Hosting
+
+url - https://async-race-application.netlify.app/ (Note that only client side is deployed as the task demands. If you want to watch the project you will need to run it locally by the instruction below.)
+
 # Points Estimation
 
-Overall - about 290 points
+<h2>Overall 322.5 points</h2>
 
-1. UI deployment -
+1. UI deployment +
 2. Requirements to Commits and Repository + 
 3. Basic Structure
  * View Configuration
- > Two Views (10 points) +10
- > Garage View (5 points) +5
- > Winners View (5 points) +5
- > Persistant State (10 points) - 
+      > Two Views (10 points) +10
+      > Garage View (5 points) +5
+      > Winners View (5 points) +5
+      > Persistant State (10 points) - 
 
  * Garage View Functionality
- > CRUD Operations (20 points) +15 
- > Color Selection (10 points) +10
- > Management Buttons (5 points) +5
- > Pagination (10 points) +10
+      > CRUD Operations (20 points) +15 
+      > Color Selection (10 points) +10
+      > Management Buttons (5 points) +5
+      > Pagination (10 points) +10
 
  * Car Generation
- > Random Cars Generation (10 points) +10
+      > Random Cars Generation (10 points) +10
 
  4. Car Animation 
- > Engine Control Buttons (10 points) +10
- > Start Engine Animation  (20 points) +15
- > Stop Engine Animation (10 points) +10
- > Button States (5 points) -
- > Responsive Animation (5 points) +5
+      > Engine Control Buttons (10 points) +10
+      > Start Engine Animation  (20 points) +15
+      > Stop Engine Animation (10 points) +10
+      > Button States (5 points) +5
+      > Responsive Animation (5 points) +5
 
  5. Race Animation
- > Start Race Button (15 points) +15
- > Reset Race Button (10 points) +10
- > Winner Announcement (10 points) +10
+      > Start Race Button (15 points) +15
+      > Reset Race Button (10 points) +10
+      > Winner Announcement (10 points) +10
 
  6. Winners View
- > Display Winners (15 points) +15
- > Pagination for Winners (10 points) +10
- > Winners Table (10 points) +10
- > Sorting Functionality (10 points) +10
+      > Display Winners (15 points) +15
+      > Pagination for Winners (10 points) +10
+      > Winners Table (10 points) +10
+      > Sorting Functionality (10 points) +10
 
  7. Application Architecture 
- > Modular Design (40 points) +30
+      > Modular Design (40 points) +30
 
  8. Dynamic Content Generation
- > JavaScript-Generated HTML Content (30 points) +5
+      > JavaScript-Generated HTML Content (30 points) +15
 
  9. Single Page Application
- > SPA Implementation (25 points) +20
+      > SPA Implementation (25 points) +20
  
  10. Bundling and Tooling
- > Use of Webpack or Similar (20 points) +5
+      > Use of Webpack or Similar (20 points) +5
 
  11. Code Quality and Standards 
- > Eslint with Airbnb Style Guide (15 points) +5
+      > Eslint with Airbnb Style Guide (15 points) +5
 
  12. Code Organization and Efficiency
- > Function Modularization (10 points) +5
- > Code Duplication and Magic Numbers (5 points) +5
+      > Function Modularization (10 points) +5
+      > Code Duplication and Magic Numbers (5 points) +5
 
  13. Prettier and ESLint Configuration
- > Prettier Setup (5 points) -
- > ESLint Configuration (5 points) +2.5
+      > Prettier Setup (5 points) -
+      > ESLint Configuration (5 points) +2.5
 
  14.  Overall Code Quality
- >  (Up to 35 points) +25
+      > (Up to 35 points) +25
 
 # Checklist
 
@@ -174,18 +178,39 @@ Overall - about 290 points
 
 # Getting Started
 
-First, run the development server:
+1. Clone the Repository:
+
+Open your terminal and navigate to the directory where you want to clone the repository. Then, run the following command:
+
+```bash
+git clone https://github.com/<username>/<repository-name>.git
+```
+
+2. Install Dependencies:
+
+Navigate to the cloned project directory:
+
+```bash
+cd 
+```
+Then, install the project's dependencies by running:
+
+```bash
+npm install 
+```
+
+3. Set Up Environment Variables:
+
+The project likely uses environment variables to store sensitive information like API URLs. Create a file named .env.local in the project's root directory.In the .env.local file, add the following line, replacing <your-server-url> with the actual URL of your server:
+
+NEXT_PUBLIC_SERVER_URL=<your-server-url>
+
+4. Start the Development Server:
+
+Run the following command in your terminal to start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This will start the development server, typically at http://localhost:3000 (the port might vary depending on the project). You can then access your application in your web browser.

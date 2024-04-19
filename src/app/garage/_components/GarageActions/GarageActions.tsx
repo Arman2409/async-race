@@ -27,7 +27,7 @@ const GarageActions = () => {
     const startRace = useCallback(() => {
         setAllRacing((curr: AllRacing) => curr === "initial" ? "ready" : curr);
         setWinner(null);
-    }, [setAllRacing, setWinner, allRacing])
+    }, [setAllRacing, setWinner])
 
     useEffect(() => {
         if (allReady && allRacing == "ready") {

@@ -35,10 +35,11 @@ const GarageItem = (
     if (!checkOnResult?.success) {
       setCarStatus(curr => {
         if (curr === "initial" || curr === "waiting") return curr;
+        if (allRacing === "ready" || allRacing === "cancel") return curr;
         return "broken";
       });
     }
-  }, [id, setCarStatus]);
+  }, [id, setCarStatus, allRacing]);
 
   const startRace = useCallback(async (wait?: boolean) => {
     if ((carStatus !== "initial" && carStatus !== "waiting") && !wait) return;
@@ -87,12 +88,13 @@ const GarageItem = (
       }
       setCarStatus("initial");
     }
-  }, [getStoppedStatus, setCarStatus, startRace, allRacing])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getStoppedStatus, setStoppedCars, setCarStatus, startRace, allRacing])
 
   useEffect(() => {
     if (highway.current) {
       setHighwayWidth(highway.current.offsetWidth);
-      window.addEventListener("resize", ({ target }: Event) => {
+      window.addEventListener("resize", () => {
         if (highway.current) setHighwayWidth(highway.current.offsetWidth);
       })
     }
