@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, } from "react";
 import { FaChevronUp } from "react-icons/fa6";
 
-import styles from "../../../_styles/pages/Winner/components/WinnersTable/WinnersTable.module.scss";
+import styles from "../../../_styles/pages/Winners/components/WinnersTable/WinnersTable.module.scss";
 import { COLOR_INPUT_DEFAULT_COLOR } from "../../../_configs/garage";
 import getTableData from "../../../_requests/getTableData";
 import getWinnerDetails from "../../../_requests/getWinnerDetails";

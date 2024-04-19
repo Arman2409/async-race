@@ -1,6 +1,6 @@
 import { FaTrophy } from "react-icons/fa6";
 
-import styles from "../../../../../_styles/pages/Winner/components/WinnersTable/components/WinnersTableBody.module.scss";
+import styles from "../../../../../_styles/pages/Winners/components/WinnersTable/components/WinnersTableBody.module.scss";
 import CarIcon from "../../../../../_components/shared/CarIcon/CarIcon";
 import type { WinnersTableBodyProps } from "../../../../../_types/pages/winners/winner";
 

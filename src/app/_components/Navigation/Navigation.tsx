@@ -11,7 +11,7 @@ const Navigation = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const changePage = useCallback((page: "garage" | "winner") => {
+  const changePage = useCallback((page: "garage" | "winners") => {
     router.push(page === "garage" ? "/" : page);
   }, [router]);
 
@@ -25,7 +25,7 @@ const Navigation = () => {
         {active}
       </h2>
       <Button
-        onClick={() => changePage("winner")}
+        onClick={() => changePage("winners")}
         isActive={active === "Winners"}
         text="Winners"
       />

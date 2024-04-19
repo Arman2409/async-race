@@ -28,7 +28,10 @@ const getTableData = async (
                 data: data || [],
                 total: headers["x-total-count"] || 0,
             }
-        })
+        }).catch(() => ({
+            data: [],
+            total: []
+        }))
     } catch (err) {
         const { message = "Error occured while fetching" } = { ...err || {} }
         console.error(message)
