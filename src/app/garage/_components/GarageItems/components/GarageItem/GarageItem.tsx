@@ -42,8 +42,7 @@ const GarageItem = (
   }, [id, setCarStatus, allRacing]);
 
   const startRace = useCallback(async (wait?: boolean) => {
-    if ((carStatus !== "initial" && carStatus !== "waiting") && !wait) return;
-    if (carStatus === "waiting") {
+    if (allRacing === "started") {
       setCarStatus("started");
       checkCarStatus();
       return;
@@ -60,7 +59,7 @@ const GarageItem = (
       setDriveDetails(startResult);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, setDriveDetails, checkCarStatus, setCarStatus])
+  }, [allRacing, setDriveDetails, checkCarStatus, setCarStatus])
 
   const getStoppedStatus = useCallback(async () => await updateCarStatus(id, "stopped"), [id])
 
@@ -106,7 +105,6 @@ const GarageItem = (
         startRace();
         break;
       case "ready":
-        cancelRace();
         startRace(true);
         break;
       case "cancel":
@@ -129,7 +127,8 @@ const GarageItem = (
         return winner;
       })
     }
-  }, [id, name, carStatus, allRacing, color, driveDetails, highwayWidth, setAllRacing, setWinner])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [carStatus, allRacing, color, driveDetails, highwayWidth, setAllRacing, setWinner])
 
   return (
     <div

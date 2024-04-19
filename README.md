@@ -4,73 +4,11 @@ Car racing stimulation
 
 # UI Hosting
 
-url - https://async-race-application.netlify.app/ (Note that only client side is deployed as the task demands. If you want to watch the project you will need to run it locally by the instruction below.)
+https://async-race-application.netlify.app/ (Note that only client side is deployed as the task demands.To watch the project you will need to run it locally by the instruction below.)
 
 # Points Estimation
 
-<h2>Overall 322.5 points</h2>
-
-1. UI deployment +
-2. Requirements to Commits and Repository + 
-3. Basic Structure
- * View Configuration
-      > Two Views (10 points) +10
-      > Garage View (5 points) +5
-      > Winners View (5 points) +5
-      > Persistant State (10 points) - 
-
- * Garage View Functionality
-      > CRUD Operations (20 points) +15 
-      > Color Selection (10 points) +10
-      > Management Buttons (5 points) +5
-      > Pagination (10 points) +10
-
- * Car Generation
-      > Random Cars Generation (10 points) +10
-
- 4. Car Animation 
-      > Engine Control Buttons (10 points) +10
-      > Start Engine Animation  (20 points) +15
-      > Stop Engine Animation (10 points) +10
-      > Button States (5 points) +5
-      > Responsive Animation (5 points) +5
-
- 5. Race Animation
-      > Start Race Button (15 points) +15
-      > Reset Race Button (10 points) +10
-      > Winner Announcement (10 points) +10
-
- 6. Winners View
-      > Display Winners (15 points) +15
-      > Pagination for Winners (10 points) +10
-      > Winners Table (10 points) +10
-      > Sorting Functionality (10 points) +10
-
- 7. Application Architecture 
-      > Modular Design (40 points) +30
-
- 8. Dynamic Content Generation
-      > JavaScript-Generated HTML Content (30 points) +15
-
- 9. Single Page Application
-      > SPA Implementation (25 points) +20
- 
- 10. Bundling and Tooling
-      > Use of Webpack or Similar (20 points) +5
-
- 11. Code Quality and Standards 
-      > Eslint with Airbnb Style Guide (15 points) +5
-
- 12. Code Organization and Efficiency
-      > Function Modularization (10 points) +5
-      > Code Duplication and Magic Numbers (5 points) +5
-
- 13. Prettier and ESLint Configuration
-      > Prettier Setup (5 points) -
-      > ESLint Configuration (5 points) +2.5
-
- 14.  Overall Code Quality
-      > (Up to 35 points) +25
+<h2>310 points</h2>
 
 # Checklist
 
