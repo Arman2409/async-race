@@ -1,17 +1,20 @@
 "use client"
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import styles from "../_styles/pages/Winners/Winners.module.scss";
 import { WINNER_PER_PAGE } from "../_configs/winners";
 import WinnersTable from "./_components/WinnersTable/WinnersTable";
 import Pagination from "../_components/shared/Pagination/Pagination";
+import { paginationContext } from "../_context/pagination/context";
 import type { Winner } from "../_types/pages/winners/winner";
 
-const Winners = () => {
+const Winner = () => {
     const [winnersData, setWinnersData] = useState<Winner[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>(1);
     const [total, setTotal] = useState<number>(0);
 
+    const { winnerPage } = useContext(paginationContext);
+    const [currentPage, setCurrentPage] = useState<number>(winnerPage || 1);
+ 
     return (
         <div className={styles.winner}>
             <WinnersTable
@@ -24,6 +27,7 @@ const Winners = () => {
                 setCurrent={setCurrentPage}
                 opacity={0.85}
                 total={total}
+                type="winner"
                 itemsCount={winnersData.length}
                 perPage={WINNER_PER_PAGE}
             />
@@ -31,4 +35,4 @@ const Winners = () => {
     )
 }
 
-export default Winners;
+export default Winner;

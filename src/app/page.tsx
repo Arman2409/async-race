@@ -1,8 +1,9 @@
 "use client"
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import styles from "./_styles/pages/Garage/Garage.module.scss";
 import { GARAGE_PER_PAGE } from "./_configs/garage";
+import { paginationContext } from "./_context/pagination/context";
 import { garageContext } from "./_context/garage";
 import getTableData from "./_requests/getTableData";
 import Pagination from "./_components/shared/Pagination/Pagination";
@@ -17,12 +18,14 @@ const Garage = () => {
   const [allRacing, setAllRacing] = useState<"started" | "ready" | "cancel" | "initial">("initial");
   const [selected, setSelected] = useState<Car>({} as Car);
   const [winner, setWinner] = useState<Winner>({} as Winner);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [garageItems, setGarageItems] = useState<Car[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [readyCars, setReadyCars] = useState<string[]>([]);
   const [stoppedCars, setStoppedCars] = useState<string[]>([]);
+
+  const { garagePage } = useContext(paginationContext);
+  const [currentPage, setCurrentPage] = useState<number>(garagePage || 1);
 
   const allReady = useMemo(() => readyCars.length === garageItems.length, [readyCars, garageItems]);
   const allStopped = useMemo(() => stoppedCars.length === garageItems.length, [stoppedCars, garageItems]);
@@ -37,12 +40,17 @@ const Garage = () => {
 
   useEffect(() => {
     getGarageItems();
-    setAllRacing("initial");
-  }, [currentPage, getGarageItems]);
+    setAllRacing("cancel");
+    setReadyCars([]);
+    setStoppedCars([]);
+  }, [currentPage, getGarageItems, setReadyCars, setStoppedCars]);
 
   useEffect(() => {
     if (allRacing === "cancel") {
       setStoppedCars([]);
+    }
+    if(allRacing === "initial") {
+      setLoading(false);
     }
   }, [allRacing, setStoppedCars])
 
@@ -52,13 +60,14 @@ const Garage = () => {
       allRacing,
       selected,
       allReady,
+      setLoading,
       allStopped,
       setReadyCars,
       setAllRacing,
       setWinner,
       setSelected,
-      getGarageItems,
-      setStoppedCars
+      setStoppedCars,
+      getGarageItems
     }}>
       <>
         <InfoModal
@@ -80,6 +89,7 @@ const Garage = () => {
             setCurrent={setCurrentPage}
             perPage={GARAGE_PER_PAGE}
             total={total}
+            type="garage"
             itemsCount={garageItems.length}
           />
         </div>

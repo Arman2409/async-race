@@ -60,7 +60,7 @@ const WinnersTable = ({ currentPage, setTotal, winners, setWinnersData }: Winner
 
     useEffect(() => {
         getWinners();
-    }, [getWinners, currentPage])
+    }, [getWinners])
 
     return (
         <div className={styles.winners_table_cont}>

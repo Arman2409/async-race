@@ -8,9 +8,10 @@ export interface GarageContext {
     winner: Winner
     selected: Car
     allRacing: AllRacing
-    setWinner:Function
-    setAllRacing:Function
+    setWinner: Function
+    setAllRacing: Function
     setSelected: Function
     setReadyCars: Function
+    setLoading: Function
     getGarageItems: Function
 }

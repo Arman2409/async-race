@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./_styles/globals.scss";
 import Header from "./_components/Header/Header";
 import Navigation from "./_components/Navigation/Navigation";
+import PaginationProvider from "./_context/pagination/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +24,10 @@ const RootLayout = ({
       <body className={inter.className}>
         <Header />
         <Navigation />
-        {children}
-        </body>
+        <PaginationProvider>
+          {children}
+        </PaginationProvider>
+      </body>
     </html>
   );
 }
