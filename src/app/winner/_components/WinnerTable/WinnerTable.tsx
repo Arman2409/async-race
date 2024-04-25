@@ -1,22 +1,26 @@
 import { useCallback, useEffect, useState, } from "react";
 import { FaChevronUp } from "react-icons/fa6";
 
-import styles from "../../../_styles/pages/Winners/components/WinnersTable/WinnersTable.module.scss";
+import styles from "../../../_styles/pages/Winner/components/WinnerTable/WinnerTable.module.scss";
 import { COLOR_INPUT_DEFAULT_COLOR } from "../../../_configs/garage";
 import getTableData from "../../../_requests/getTableData";
 import getWinnerDetails from "../../../_requests/getWinnerDetails";
 import Loading from "../../../_components/shared/Loading/Loading";
-import WinnersTableBody from "./components/WinnersTableBody/WinnersTableBody";
-import type { Winner, WinnersTableProps } from "../../../_types/pages/winners/winner";
+import WinnerTableBody from "./components/WinnerTableBody/WinnerTableBody";
+import type { Winner, WinnerTableProps } from "../../../_types/pages/winner";
 
-const WinnersTable = ({ currentPage, setTotal, winners, setWinnersData }: WinnersTableProps) => {
+const winnerTable = ({
+    currentPage,
+    winner,
+    setTotal,
+    setwinnerData }: WinnerTableProps) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [sortByWins, setSortByWins] = useState<"desc" | "asc" | "default">("default");
     const [sortByTime, setSortByTime] = useState<"desc" | "asc" | "default">("default");
 
-    const getWinners = useCallback((async () => {
+    const getwinner = useCallback((async () => {
         setLoading(true);
-        const { data = [], total = 0 } = await getTableData("winners", currentPage, sortByWins, sortByTime);
+        const { data = [], total = 0 } = await getTableData("winner", currentPage, sortByWins, sortByTime);
         setTotal(total);
         const winnerDetailsPromises = await Promise.all(data.flatMap(async (winner: Winner) => {
             if (!winner?.name || !winner?.color) {
@@ -30,45 +34,40 @@ const WinnersTable = ({ currentPage, setTotal, winners, setWinnersData }: Winner
             }
             return winner;
         }))
-        setWinnersData(winnerDetailsPromises);
+        setwinnerData(winnerDetailsPromises);
         setLoading(false);
-    }), [currentPage, setWinnersData, setTotal, setLoading, sortByTime, sortByWins])
+    }), [currentPage, setwinnerData, setTotal, setLoading, sortByTime, sortByWins])
 
     const changeSortDetails = useCallback((column: "wins" | "time") => {
         if (column === "wins") {
-            setSortByWins(curr => {
-                switch (curr) {
-                    case ("desc"): return "asc";
-                    case ("asc"): return "desc";
-                    case ("default"): return "asc";
-                }
+            setSortByWins((curr) => {
+                if (curr === "desc") return "asc";
+                if (curr === "asc") return "desc";
+                return "asc"; // "default" case
             });
-            setSortByTime("default")
-        }
-        if (column === "time") {
-            setSortByTime(curr => {
-                switch (curr) {
-                    case ("desc"): return "asc";
-                    case ("asc"): return "desc";
-                    case ("default"): return "asc";
-                }
+            setSortByTime("default");
+        } else if (column === "time") {
+            setSortByTime((curr) => {
+                if (curr === "desc") return "asc";
+                if (curr === "asc") return "desc";
+                return "asc"; // "default" case
             });
-            setSortByWins("default")
+            setSortByWins("default");
         }
-        getWinners();
-    }, [setSortByTime, setSortByWins, getWinners])
+        getwinner();
+    }, [setSortByTime, setSortByWins, getwinner]);
 
     useEffect(() => {
-        getWinners();
-    }, [getWinners])
+        getwinner();
+    }, [getwinner])
 
     return (
-        <div className={styles.winners_table_cont}>
+        <div className={styles.winner_table_cont}>
             <Loading
                 show={loading}
                 zIndex={9}
             />
-            <table className={styles.winners_table_cont__table}>
+            <table className={styles.winner_table_cont__table}>
                 <thead>
                     <tr>
                         <th>No</th>
@@ -78,7 +77,7 @@ const WinnersTable = ({ currentPage, setTotal, winners, setWinnersData }: Winner
                             onClick={() => changeSortDetails("wins")}>
                             Wins
                             <FaChevronUp
-                                className={styles.winners_table_cont__sort_icon}
+                                className={styles.winner_table_cont__sort_icon}
                                 style={{ transform: `rotate(${(sortByWins === "desc" || sortByWins === "default") ? 180 : 0}deg)` }}
                             />
                         </th>
@@ -86,18 +85,18 @@ const WinnersTable = ({ currentPage, setTotal, winners, setWinnersData }: Winner
                             onClick={() => changeSortDetails("time")}>
                             Best Time
                             <FaChevronUp
-                                className={styles.winners_table_cont__sort_icon}
+                                className={styles.winner_table_cont__sort_icon}
                                 style={{ transform: `rotate(${(sortByTime === "desc" || sortByTime === "default") ? 180 : 0}deg)` }}
                             />
                         </th>
                     </tr>
                 </thead>
-                <WinnersTableBody
-                  currentPage={currentPage} 
-                  winners={winners}/>
+                <WinnerTableBody
+                    currentPage={currentPage}
+                    winner={winner} />
             </table>
         </div>
     )
 }
 
-export default WinnersTable;
+export default winnerTable;

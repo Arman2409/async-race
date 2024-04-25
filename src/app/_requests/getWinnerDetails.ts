@@ -1,19 +1,16 @@
+
 import axiosInstance from "./utils/axiosInstance";
+import { handleFetchError } from "./utils/functions";
 
 const getWinnerDetails = async (
    id: string
 ) => {
    try {
-      return axiosInstance.get(`/garage/${id}`)
-         .then(({ data }) => data)
-         .catch(({ message }) => {
-            console.error(message || "Error occured");
-         })
+      const response = await axiosInstance.get(`/winner/${id}`);
+      return response.data;
+   } catch (err) {
+      return handleFetchError(err);
    }
-   catch (err) {
-      const { message = "Error occured while fetching" } = { ...err || {} }
-      console.error(message)
-   }
-}
+};
 
 export default getWinnerDetails;

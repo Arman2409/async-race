@@ -9,8 +9,8 @@ import cutString from "../../../../../_helpers/cutString";
 import { roundToPrecision } from "./utils/functions";
 import Car from "./components/Car/Car";
 import ItemActions from "./components/ItemActions/ItemActions";
-import type { CarStatus, DriveDetails, GarageItemProps } from "../../../../../_types/pages/garage/garage";
-import type { Winner } from "../../../../../_types/pages/winners/winner";
+import type { CarStatus, DriveDetails, GarageItemProps } from "../../../../../_types/pages/garage";
+import type { Winner } from "../../../../../_types/pages/winner";
 
 const GarageItem = (
   { name,

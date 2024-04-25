@@ -1,9 +1,10 @@
 import { GARAGE_PER_PAGE } from "../_configs/garage";
-import { WINNER_PER_PAGE } from "../_configs/winners";
+import { WINNER_PER_PAGE } from "../_configs/winner";
 import axiosInstance from "./utils/axiosInstance";
+import { handleFetchError } from "./utils/functions";
 
 const getTableData = async (
-    forTable: "winners" | "garage",
+    forTable: "winner" | "garage",
     page: number = 1,
     sortByWins?: "desc" | "asc" | "default",
     sortByTime?: "desc" | "asc" | "default"
@@ -11,35 +12,23 @@ const getTableData = async (
     const sort = sortByWins !== "default" ? "wins" : "time";
     const order = sortByWins !== "default" ? sortByWins
         : sortByTime !== "default" ? sortByTime : "inc";
-    const params = forTable === "garage" ? {
-        _page: page,
-        _limit: GARAGE_PER_PAGE
-    } : {
-        _page: page,
-        _limit: WINNER_PER_PAGE,
-        _sort: sort,
-        _order: order,
-    }
+    const params = forTable === "garage"
+        ? { _page: page, _limit: GARAGE_PER_PAGE }
+        : { _page: page, _limit: WINNER_PER_PAGE, _sort: sort, _order: order };
+
     try {
-        return axiosInstance.get(`/${forTable}`, {
-            params
-        }).then(({ data, headers }) => {
-            return {
-                data: data || [],
-                total: headers["x-total-count"] || 0,
-            }
-        }).catch(() => ({
-            data: [],
-            total: []
-        }))
+        const response = await axiosInstance.get(`/${forTable}`, { params });
+        return {
+            data: response.data || [],
+            total: response.headers["x-total-count"] || 0,
+        };
     } catch (err) {
-        const { message = "Error occured while fetching" } = { ...err || {} }
-        console.error(message)
+        handleFetchError(err);
         return {
             data: [],
-            total: []
-        }
+            total: 0,
+        };
     }
-}
+};
 
 export default getTableData;

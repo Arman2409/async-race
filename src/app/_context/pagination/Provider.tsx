@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 import { paginationContext } from './context';
-import type { ProviderProps } from "../../_types/context/global";
+import type { ProviderProps } from "../../_types/global";
 
 const PaginationProvider = ({ children }: ProviderProps) => {
   const [winnerPage, setWinnerPage] = useState<number>(1);

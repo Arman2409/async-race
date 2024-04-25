@@ -1,3 +1,3 @@
 export interface ProviderProps {
-    children: React.ReactNode;
+    children: React.ReactNode
 }

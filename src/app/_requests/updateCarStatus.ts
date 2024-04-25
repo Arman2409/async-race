@@ -1,4 +1,5 @@
 import axiosInstance from "./utils/axiosInstance"
+import { handleFetchError } from "./utils/functions";
 
 const updateCarStatus = async (
     id: string, 
@@ -16,8 +17,7 @@ const updateCarStatus = async (
             });
     }
     catch (err) {
-        const { message = "Error occured while fetching" } = { ...err || {} }
-        console.error(message)
+        return handleFetchError(err);
     }
 }
 

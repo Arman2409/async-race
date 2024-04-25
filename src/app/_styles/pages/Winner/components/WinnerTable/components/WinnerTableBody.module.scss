@@ -1,6 +1,6 @@
 @import "../../../../../common/variables.scss";
 
-.winners_table_body {
+.winner_table_body {
     &__row {
         &_1 {
             background-color: rgba($blue_light, 0.85);
@@ -25,17 +25,17 @@
         left: 15px;
 
         &_1 {
-            @extend .winners_table_body__trophy;
+            @extend .winner_table_body__trophy;
             color: gold;
         }
 
         &_2 {
-            @extend .winners_table_body__trophy;
+            @extend .winner_table_body__trophy;
             color: silver;
         }
 
         &_3 {
-            @extend .winners_table_body__trophy;
+            @extend .winner_table_body__trophy;
             color: brown;
         }
     }

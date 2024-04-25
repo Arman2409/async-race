@@ -11,8 +11,8 @@ import GarageActions from "./garage/_components/GarageActions/GarageActions";
 import GarageItems from "./garage/_components/GarageItems/GarageItems";
 import InfoModal from "./garage/_components/InfoModal/InfoModal";
 import Loading from "./_components/shared/Loading/Loading";
-import type { Car } from "./_types/pages/garage/garage";
-import type { Winner } from "./_types/pages/winners/winner";
+import type { Car } from "./_types/pages/garage";
+import type { Winner } from "./_types/pages/winner";
 
 const Garage = () => {
   const [allRacing, setAllRacing] = useState<"started" | "ready" | "cancel" | "initial">("initial");
@@ -40,7 +40,7 @@ const Garage = () => {
 
   useEffect(() => {
     getGarageItems();
-    setAllRacing("cancel");
+    setAllRacing(curr => curr === "initial" ? "initial" : "cancel");
     setReadyCars([]);
     setStoppedCars([]);
   }, [currentPage, getGarageItems, setReadyCars, setStoppedCars]);

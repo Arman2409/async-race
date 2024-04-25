@@ -8,7 +8,7 @@ import generateCars from "../../../_requests/generateCars";
 import generateRandomCarObjects from "./functions/generateRandomCarObjects";
 import GarageInputs from "./components/GarageInputs/GarageInputs";
 import Button from "../../../_components/shared/Button/Button";
-import type { AllRacing } from "../../../_types/pages/garage/garage";
+import type { AllRacing } from "../../../_types/pages/garage";
 
 const GarageActions = () => {
     const { allRacing, allReady, allStopped, setReadyCars, setLoading, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);

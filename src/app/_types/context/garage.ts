@@ -1,5 +1,5 @@
-import type { AllRacing, Car } from "../pages/garage/garage"
-import type { Winner } from "../pages/winners/winner"
+import type { AllRacing, Car } from "../pages/garage"
+import type { Winner } from "../pages/winner"
 
 export interface GarageContext {
     allReady: boolean

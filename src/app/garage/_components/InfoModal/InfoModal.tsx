@@ -9,8 +9,8 @@ import { SHOW_WINNER_TIME, START_RACE_TIMEOUT } from "../../../_configs/garage";
 import addWinner from "../../../_requests/addWinner";
 import { numberVariants } from "./utils/variants";
 import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
-import type { InfoModalProps } from "../../../_types/pages/garage/garage";
-import type { Winner } from "../../../_types/pages/winners/winner";
+import type { InfoModalProps } from "../../../_types/pages/garage";
+import type { Winner } from "../../../_types/pages/winner";
 
 const InfoModal = ({ winner, allRacing, allReady}: InfoModalProps) => {
     const [countdown, setCountdown] = useState<number>(START_RACE_TIMEOUT);

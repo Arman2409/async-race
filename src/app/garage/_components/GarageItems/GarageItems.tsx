@@ -4,7 +4,7 @@ import { useContext } from "react";
 import styles from "../../../_styles/pages/Garage/components/GarageItems/GarageItems.module.scss";
 import { garageContext } from "../../../_context/garage";
 import GarageItem from "./components/GarageItem/GarageItem";
-import type { GarageItemsProps } from "../../../_types/pages/garage/garage";
+import type { GarageItemsProps } from "../../../_types/pages/garage";
 
 const GarageItems = (
     { garageItems,

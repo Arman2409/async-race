@@ -1,4 +1,4 @@
-import type { Winner } from "../winners/winner"
+import type { Winner } from "./winner"
 
 export type AllRacing = "started" | "ready" | "cancel" | "initial"
 
