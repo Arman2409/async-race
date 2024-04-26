@@ -34,6 +34,10 @@
 
             left: unset;
             right: 115px;
+
+            @media screen and (max-width: $medium) {
+                display: none;
+            }
         }
     }
 

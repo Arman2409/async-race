@@ -10,4 +10,8 @@
     flex-direction: column;
     margin: 0px auto;
     position: relative;
+
+    @media screen and (max-width:  $medium) {
+        width: 95%;
+    }
 }

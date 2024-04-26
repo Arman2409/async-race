@@ -20,7 +20,7 @@ const Lights = ({ position }: LightProps) => {
         let currentX = 0;
         const lightsY = canvasEl.height * 0.5;
 
-        let lights: Light[] = [];
+        const lights: Light[] = [];
 
         const initLights = () => {
             for (let i = 0; i < numLights; i++) {
@@ -45,7 +45,6 @@ const Lights = ({ position }: LightProps) => {
                 ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
 
                 for (const light of lights) {
-
                     ctx.beginPath();
                     ctx.arc(light.x, light.y, lightRadius, 0, 2 * Math.PI);
                     ctx.strokeStyle = `rgba(255, 255, 255)`;

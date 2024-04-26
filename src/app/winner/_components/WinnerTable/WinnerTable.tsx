@@ -25,8 +25,6 @@ const WinnerTable = ({
         const winnerDetailsPromises = await Promise.all(data.flatMap(async (winner: Winner) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
-                console.log(winnerDetails);
-                
                 const { name = "", color = "" } = { ...winnerDetails || {} };
                 return {
                     ...winner,

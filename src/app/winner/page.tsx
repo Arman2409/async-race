@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 
 import styles from "../_styles/pages/Winner/Winner.module.scss";
 import { WINNER_PER_PAGE } from "../_configs/winner";
-import { paginationContext } from "../_context/pagination/context";
+import { paginationContext } from "../_contexts/pagination/context";
 import WinnerTable from "./_components/WinnerTable/WinnerTable";
 import Pagination from "../_components/shared/Pagination/Pagination";
 import type { Winner } from "../_types/pages/winner";

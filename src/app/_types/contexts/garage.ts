@@ -1,11 +1,9 @@
 import type { AllRacing, Car } from "../pages/garage"
-import type { Winner } from "../pages/winner"
 
 export interface GarageContext {
     allReady: boolean
     allStopped: boolean
-    readyCarsCount: number
-    winner: Winner
+    itemsCount: number
     selected: Car
     allRacing: AllRacing
     setStoppedCars: Function

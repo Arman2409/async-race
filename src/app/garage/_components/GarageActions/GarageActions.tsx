@@ -4,7 +4,7 @@ import { MdOutlineStart, MdOutlineCancel } from "react-icons/md";
 
 import styles from "../../../_styles/pages/Garage/components/GaaragActions/GarageActions.module.scss";
 import { GARAGE_PER_PAGE } from "../../../_configs/garage";
-import { garageContext } from "../../../_context/garage";
+import { garageContext } from "../../../_contexts/garage";
 import generateCars from "../../../_requests/generateCars";
 import generateRandomCarObjects from "./functions/generateRandomCarObjects";
 import GarageInputs from "./components/GarageInputs/GarageInputs";
@@ -12,14 +12,18 @@ import Button from "../../../_components/shared/Button/Button";
 import type { AllRacing } from "../../../_types/pages/garage";
 
 const GarageActions = () => {
-    const { allRacing, allReady, readyCarsCount,  allStopped, setReadyCars, setLoading, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);
-    
+    const { allRacing, allReady, itemsCount, allStopped, setReadyCars, setLoading, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);
+
     const generateNewCars = useCallback(async () => {
-        if(readyCarsCount !== GARAGE_PER_PAGE) setAllRacing("cancel");
+        const isNotFull = itemsCount !== GARAGE_PER_PAGE;
+        if (isNotFull) setAllRacing("cancel");
         const newCars = generateRandomCarObjects();
         const generateResult = await generateCars(newCars);
-        if (generateResult) getGarageItems();
-    }, [getGarageItems])
+        if (generateResult) {
+            if (isNotFull) return getGarageItems();
+            getGarageItems(true);
+        }
+    }, [getGarageItems, itemsCount])
 
     const cancelRace = useCallback(() => {
         if (allRacing === "initial") return;
@@ -40,7 +44,9 @@ const GarageActions = () => {
     }, [allReady, allRacing, setAllRacing])
 
     useEffect(() => {
-        if (allStopped) setAllRacing("initial");
+        if (allStopped) {
+            setAllRacing("initial");
+        }
     }, [allStopped, setAllRacing])
 
     return (

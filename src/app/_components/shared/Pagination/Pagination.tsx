@@ -2,8 +2,8 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 
 import styles from "../../../_styles/components/shared/Pagination.module.scss";
+import { paginationContext } from "../../../_contexts/pagination/context";
 import type { PaginationProps } from "../../../_types/components/shared/pagination";
-import { paginationContext } from "@/app/_context/pagination/context";
 
 const Pagination = (
   {

@@ -105,12 +105,7 @@
     }
 
     &__disabled {
-       font-size: 16px;
        opacity: 0.6;
        cursor: default;
-
-       &:hover {
-        font-size: 16px;
-       }
     }
 }

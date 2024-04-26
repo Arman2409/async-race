@@ -17,6 +17,7 @@ const Navigation = () => {
   }, [router]);
 
   useEffect(() => {
+    // change active element by the window's location 
     setActive(pathname === "/" ? "garage" : "winner");
   }, [pathname, setActive])
 

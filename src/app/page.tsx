@@ -3,8 +3,8 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import styles from "./_styles/pages/Garage/Garage.module.scss";
 import { GARAGE_PER_PAGE } from "./_configs/garage";
-import { paginationContext } from "./_context/pagination/context";
-import { garageContext } from "./_context/garage";
+import { paginationContext } from "./_contexts/pagination/context";
+import { garageContext } from "./_contexts/garage";
 import getTableData from "./_requests/getTableData";
 import Pagination from "./_components/shared/Pagination/Pagination";
 import GarageActions from "./garage/_components/GarageActions/GarageActions";
@@ -30,17 +30,21 @@ const Garage = () => {
   const allReady = useMemo(() => readyCars.length === garageItems.length, [readyCars, garageItems]);
   const allStopped = useMemo(() => stoppedCars.length === garageItems.length, [stoppedCars, garageItems]);
 
-  const getGarageItems = useCallback(async () => {
-    setLoading(true);
+  const getGarageItems = useCallback(async (onlyTotal?: boolean) => {
+    if (!onlyTotal) {
+      setAllRacing("initial");
+      setGarageItems([]);
+      setReadyCars([]);
+      setLoading(true);
+    }
     const { data, total: totalItems } = await getTableData("garage", currentPage);
+    if (!onlyTotal) setGarageItems(data || []);
     setTotal(totalItems);
-    setGarageItems(data || []);
-    setLoading(false)
-  }, [currentPage, setTotal, setGarageItems, setLoading])
+  }, [currentPage, setTotal, setGarageItems, setLoading, setAllRacing])
 
   useEffect(() => {
     getGarageItems();
-    setAllRacing(curr => curr === "initial" ? "initial" : "cancel");
+    setAllRacing("initial");
     setReadyCars([]);
     setStoppedCars([]);
   }, [currentPage, getGarageItems, setReadyCars, setStoppedCars]);
@@ -50,18 +54,17 @@ const Garage = () => {
       setStoppedCars([]);
       setLoading(true);
     }
-    if (allRacing === "initial") {
+    if (allRacing === "initial" && garageItems.length) {
       setLoading(false);
     }
-  }, [allRacing, setStoppedCars])
+  }, [allRacing, setStoppedCars, garageItems])
 
   return (
     <garageContext.Provider value={{
-      winner,
       allRacing,
       selected,
       allReady,
-      readyCarsCount: readyCars.length,
+      itemsCount: garageItems.length,
       setLoading,
       allStopped,
       setReadyCars,

@@ -5,9 +5,9 @@ const deleteCar = async (
    id: string
 ) => {
    try {
-      await axiosInstance.delete(`/garage/${id}`);
-      await axiosInstance.delete(`/winner/${id}`);
-      return true;
+      const deleteResult = await axiosInstance.delete(`/garage/${id}`);
+      axiosInstance.delete(`/winner/${id}`).catch(() => {});
+      if (deleteResult) return true;
    } catch (err) {
       return handleFetchError(err);
    }

@@ -4,7 +4,7 @@ import styles from "../../../../../_styles/pages/Winner/components/WinnerTable/c
 import CarIcon from "../../../../../_components/shared/CarIcon/CarIcon";
 import type { WinnerTableBodyProps } from "../../../../../_types/pages/winner";
 
-const winnerTableBody = (
+const WinnerTableBody = (
     {
         winner,
         currentPage }: WinnerTableBodyProps) => (
@@ -12,12 +12,12 @@ const winnerTableBody = (
         {winner.map(({ id, name, color, wins, time }, index) => (
             <tr
                 key={id}
-                className={styles[`winner_table_body__row_${index % 3 + 1}`]}>
+                className={styles[`winner_table_body__row__${index % 3 + 1}`]}>
                 <td style={{
                     position: currentPage === 1 && index < 3 ? 'relative' : 'static',
                 }}>
                     {currentPage === 1 && index < 3
-                        && <FaTrophy className={styles[`winner_table_body__trophy_${index + 1}`]} />}
+                        && <FaTrophy className={styles[`winner_table_body__trophy__${index + 1}`]} />}
                     {id || "N/n"}
                 </td>
                 <td>
@@ -33,4 +33,4 @@ const winnerTableBody = (
     </tbody>
 )
 
-export default winnerTableBody;
+export default WinnerTableBody;
