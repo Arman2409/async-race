@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import styles from "../../../../../../../_styles/pages/Garage/components/GarageItems/components/GarageItem/components/ItemActions.module.scss";
 import deleteCar from "../../../../../../../_requests/deleteCar";
 import Button from "../../../../../../../_components/shared/Button/Button";
-import type { ItemActionsProps } from "../../../../../../../_types/pages/garage/garage";
+import type { ItemActionsProps } from "../../../../../../../_types/pages/garage";
 
 const ItemActions = ({
     id,

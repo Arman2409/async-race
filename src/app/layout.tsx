@@ -1,32 +1,28 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 
 import "./_styles/globals.scss";
 import Header from "./_components/Header/Header";
 import Navigation from "./_components/Navigation/Navigation";
-
-const inter = Inter({ subsets: ["latin"] });
+import PaginationProvider from "./_contexts/pagination/Provider";
+import type { ProviderProps } from "./_types/global";
 
 export const metadata: Metadata = {
   title: "Async Race",
-  description: "Car racing website",
+  description: "Car racing stimulation",
 };
 
 const RootLayout = ({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
-
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <Navigation />
+}: Readonly<ProviderProps>) => (
+  <html lang="en">
+    <body>
+      <Header />
+      <Navigation />
+      <PaginationProvider>
         {children}
-        </body>
-    </html>
-  );
-}
+      </PaginationProvider>
+    </body>
+  </html>
+);
 
 export default RootLayout;

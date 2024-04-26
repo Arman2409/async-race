@@ -121,7 +121,7 @@ https://async-race-application.netlify.app/ (Note that only client side is deplo
 Open your terminal and navigate to the directory where you want to clone the repository. Then, run the following command:
 
 ```bash
-git clone https://github.com/<username>/<repository-name>.git
+git clone https://github.com/Arman2409/async-race.git
 ```
 
 2. Install Dependencies:
@@ -139,9 +139,9 @@ npm install
 
 3. Set Up Environment Variables:
 
-The project likely uses environment variables to store sensitive information like API URLs. Create a file named .env.local in the project's root directory.In the .env.local file, add the following line, replacing <your-server-url> with the actual URL of your server:
+The project likely uses environment variables to store sensitive information like API URLs. Create a file named .env.local in the project's root directory.In the .env.local file, add the URL of your server:
 
-NEXT_PUBLIC_SERVER_URL=<your-server-url>
+NEXT_PUBLIC_SERVER_URL=
 
 4. Start the Development Server:
 

@@ -11,4 +11,8 @@
     flex-direction: column;
     justify-content: flex-start;
     margin: 0px auto;
+
+    @media screen and (max-width: $medium) {
+        width: 95%;
+    }
 }

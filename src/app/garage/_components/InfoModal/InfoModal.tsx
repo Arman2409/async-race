@@ -9,24 +9,26 @@ import { SHOW_WINNER_TIME, START_RACE_TIMEOUT } from "../../../_configs/garage";
 import addWinner from "../../../_requests/addWinner";
 import { numberVariants } from "./utils/variants";
 import CarIcon from "../../../_components/shared/CarIcon/CarIcon";
-import type { InfoModalProps } from "../../../_types/pages/garage/garage";
-import type { Winner } from "../../../_types/pages/winners/winner";
+import type { InfoModalProps } from "../../../_types/pages/garage";
+import type { Winner } from "../../../_types/pages/winner";
 
-const InfoModal = ({ winner, allRacing, allReady}: InfoModalProps) => {
+const InfoModal = ({ winner, allRacing, allReady }: InfoModalProps) => {
     const [countdown, setCountdown] = useState<number>(START_RACE_TIMEOUT);
     const [showContent, setShowContent] = useState<"countdown" | "winner" | null>(null);
 
     const countInterval = useRef<NodeJS.Timeout | string>("");
 
     const addNewWinner = useCallback(async (winnerData: Winner) => {
-        const result = await addWinner(winnerData);
-        if (result) {
-            setShowContent("winner");
-            setTimeout(() => {
-                setShowContent(null);
-            }, SHOW_WINNER_TIME * 1000)
+        if (allRacing === "started") {
+            const result = await addWinner(winnerData);
+            if (result) {
+                setShowContent("winner");
+                setTimeout(() => {
+                    setShowContent(null);
+                }, SHOW_WINNER_TIME * 1000)
+            }
         }
-    }, [setShowContent])
+    }, [setShowContent, allRacing])
 
     useEffect(() => {
         if (allRacing === "ready" && !showContent) {
@@ -34,7 +36,7 @@ const InfoModal = ({ winner, allRacing, allReady}: InfoModalProps) => {
             setCountdown(START_RACE_TIMEOUT);
             if (countInterval.current) return;
             countInterval.current = setInterval(() => {
-                setCountdown((curr:number) => {
+                setCountdown((curr: number) => {
                     if (curr === 0) {
                         clearInterval(countInterval.current);
                         countInterval.current = "";

@@ -22,5 +22,9 @@
             -2px -2px 20px $orange_main,
             2px -2px 20px $orange_main,
             0 2px 20px $black_main;
+
+        @media screen and (max-width: $medium) {
+            display: none;
+        }
     }
 }

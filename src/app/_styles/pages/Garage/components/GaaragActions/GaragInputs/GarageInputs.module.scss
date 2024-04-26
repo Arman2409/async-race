@@ -19,9 +19,13 @@
    .actions_input {
       height: 100%;
       width: 200px;
+      padding: 5px;
       background-color: $blue_light;
       color: $black_main;
-      padding: 5px;
+
+      @media screen and (max-width: $medium) {
+         width: 140px;
+     }
    }
 
    .actions_color_input_cont {

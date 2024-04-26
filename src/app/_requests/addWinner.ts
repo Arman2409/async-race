@@ -1,19 +1,20 @@
 import axiosInstance from "./utils/axiosInstance";
-import type { Winner } from "../_types/pages/winners/winner";
+import type { Winner } from "../_types/pages/winner";
+import { handleFetchError } from "./utils/functions";
 
 const addWinner = async ({ id, time, wins, ...rest }: Winner) => {
     try {
-        const alreadyExisting = await axiosInstance.get(`/winners/${id}`)
+        const alreadyExisting = await axiosInstance.get(`/winner/${id}`)
             .catch(() => null);
         if (alreadyExisting?.data) {
             let { wins: existingWins = 0, time: existingTime = 0 } = { ...alreadyExisting.data || {} }
-            return await axiosInstance.patch(`/winners/${id}`, {
+            return await axiosInstance.patch(`/winner/${id}`, {
                 wins: existingWins += 1,
                 time: existingTime < time ? existingTime : time,
             })
                 .catch(() => null);
         }
-        return axiosInstance.post("/winners", {
+        return axiosInstance.post("/winner", {
             id,
             time,
             wins: 1,
@@ -23,8 +24,7 @@ const addWinner = async ({ id, time, wins, ...rest }: Winner) => {
             .catch(() => null);
 
     } catch (err) {
-        const { message = "Error occured while fetching" } = { ...err || {} }
-        console.error(message)
+        return handleFetchError(err);
     }
 }
 

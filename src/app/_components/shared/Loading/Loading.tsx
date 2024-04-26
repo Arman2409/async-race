@@ -11,11 +11,12 @@ const Loading = ({ show, zIndex }: LoadingProps) => (
             zIndex
         }}>
         <Fog />
+        {/* sports car animation  */}
         <div
-            className={styles.loading__sportcar}
+            className={styles.loading__sportscar}
         >
-            <div className={styles.loading__sportcar__cabin} />
-            <div className={styles.loading__sportcar__base}>
+            <div className={styles.loading__sportscar__cabin} />
+            <div className={styles.loading__sportscar__base}>
                 <Wheel
                     key="left"
                     side='left' />

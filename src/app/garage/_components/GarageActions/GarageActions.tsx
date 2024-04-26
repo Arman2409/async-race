@@ -3,26 +3,34 @@ import { useCallback, useContext, useEffect } from "react";
 import { MdOutlineStart, MdOutlineCancel } from "react-icons/md";
 
 import styles from "../../../_styles/pages/Garage/components/GaaragActions/GarageActions.module.scss";
-import { garageContext } from "../../../_context/garage";
+import { GARAGE_PER_PAGE } from "../../../_configs/garage";
+import { garageContext } from "../../../_contexts/garage";
 import generateCars from "../../../_requests/generateCars";
 import generateRandomCarObjects from "./functions/generateRandomCarObjects";
 import GarageInputs from "./components/GarageInputs/GarageInputs";
 import Button from "../../../_components/shared/Button/Button";
-import type { AllRacing } from "../../../_types/pages/garage/garage";
+import type { AllRacing } from "../../../_types/pages/garage";
 
 const GarageActions = () => {
-    const { allRacing, allReady, allStopped, setReadyCars, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);
+    const { allRacing, allReady, itemsCount, allStopped, setReadyCars, setLoading, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);
+
     const generateNewCars = useCallback(async () => {
+        const isNotFull = itemsCount !== GARAGE_PER_PAGE;
+        if (isNotFull) setAllRacing("cancel");
         const newCars = generateRandomCarObjects();
         const generateResult = await generateCars(newCars);
-        if (generateResult) getGarageItems();
-    }, [getGarageItems])
+        if (generateResult) {
+            if (isNotFull) return getGarageItems();
+            getGarageItems(true);
+        }
+    }, [getGarageItems, itemsCount])
 
     const cancelRace = useCallback(() => {
         if (allRacing === "initial") return;
         setAllRacing("cancel");
         setReadyCars([]);
-    }, [setAllRacing, setReadyCars, allRacing])
+        setLoading(true);
+    }, [setAllRacing, setLoading, setReadyCars, allRacing])
 
     const startRace = useCallback(() => {
         setAllRacing((curr: AllRacing) => curr === "initial" ? "ready" : curr);
@@ -30,7 +38,7 @@ const GarageActions = () => {
     }, [setAllRacing, setWinner])
 
     useEffect(() => {
-        if (allReady && allRacing == "ready") {
+        if (allReady && allRacing === "ready") {
             setAllRacing("started");
         }
     }, [allReady, allRacing, setAllRacing])
@@ -41,10 +49,6 @@ const GarageActions = () => {
         }
     }, [allStopped, setAllRacing])
 
-    useEffect(() => {
-        console.log({ allRacing });
-
-    }, [allRacing])
     return (
         <div className={styles.garage_actions}>
             <div className={styles.garage_actions__buttons_container}>

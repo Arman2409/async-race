@@ -1,1 +1,1 @@
-export type Active = "Garage" | "Winners"
+export type Active = "garage" | "winner"

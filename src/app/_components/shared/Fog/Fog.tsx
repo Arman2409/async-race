@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 import styles from "../../../_styles/components/shared/Fog.module.scss";
 import { getAllVariants } from "./utils/functions";
-import type { FogProps } from "../../../_types/pages/garage/garage";
+import type { FogProps } from "../../../_types/pages/garage";
 
 const Fog = ({ show = true, isBroken = false }: FogProps) => (
   <div
