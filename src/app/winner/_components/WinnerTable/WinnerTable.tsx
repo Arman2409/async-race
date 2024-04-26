@@ -7,16 +7,16 @@ import getTableData from "../../../_requests/getTableData";
 import getWinnerDetails from "../../../_requests/getWinnerDetails";
 import Loading from "../../../_components/shared/Loading/Loading";
 import WinnerTableBody from "./components/WinnerTableBody/WinnerTableBody";
-import type { Winner, WinnerTableProps } from "../../../_types/pages/winner";
+import type { SortStatus, Winner, WinnerTableProps } from "../../../_types/pages/winner";
 
-const winnerTable = ({
+const WinnerTable = ({
     currentPage,
     winner,
     setTotal,
     setwinnerData }: WinnerTableProps) => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [sortByWins, setSortByWins] = useState<"desc" | "asc" | "default">("default");
-    const [sortByTime, setSortByTime] = useState<"desc" | "asc" | "default">("default");
+    const [sortByWins, setSortByWins] = useState<SortStatus>("default");
+    const [sortByTime, setSortByTime] = useState<SortStatus>("default");
 
     const getwinner = useCallback((async () => {
         setLoading(true);
@@ -25,11 +25,13 @@ const winnerTable = ({
         const winnerDetailsPromises = await Promise.all(data.flatMap(async (winner: Winner) => {
             if (!winner?.name || !winner?.color) {
                 const winnerDetails = await getWinnerDetails(winner?.id);
+                console.log(winnerDetails);
+                
                 const { name = "", color = "" } = { ...winnerDetails || {} };
                 return {
                     ...winner,
                     name: name || "...Car deleted...",
-                    color: COLOR_INPUT_DEFAULT_COLOR
+                    color: color || COLOR_INPUT_DEFAULT_COLOR
                 }
             }
             return winner;
@@ -99,4 +101,4 @@ const winnerTable = ({
     )
 }
 
-export default winnerTable;
+export default WinnerTable;

@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect } from "react";
 import { MdOutlineStart, MdOutlineCancel } from "react-icons/md";
 
 import styles from "../../../_styles/pages/Garage/components/GaaragActions/GarageActions.module.scss";
+import { GARAGE_PER_PAGE } from "../../../_configs/garage";
 import { garageContext } from "../../../_context/garage";
 import generateCars from "../../../_requests/generateCars";
 import generateRandomCarObjects from "./functions/generateRandomCarObjects";
@@ -11,8 +12,10 @@ import Button from "../../../_components/shared/Button/Button";
 import type { AllRacing } from "../../../_types/pages/garage";
 
 const GarageActions = () => {
-    const { allRacing, allReady, allStopped, setReadyCars, setLoading, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);
+    const { allRacing, allReady, readyCarsCount,  allStopped, setReadyCars, setLoading, setAllRacing, setWinner, getGarageItems } = useContext(garageContext);
+    
     const generateNewCars = useCallback(async () => {
+        if(readyCarsCount !== GARAGE_PER_PAGE) setAllRacing("cancel");
         const newCars = generateRandomCarObjects();
         const generateResult = await generateCars(newCars);
         if (generateResult) getGarageItems();
@@ -31,15 +34,13 @@ const GarageActions = () => {
     }, [setAllRacing, setWinner])
 
     useEffect(() => {
-        if (allReady && allRacing == "ready") {
+        if (allReady && allRacing === "ready") {
             setAllRacing("started");
         }
     }, [allReady, allRacing, setAllRacing])
 
     useEffect(() => {
-        if (allStopped) {
-            setAllRacing("initial");
-        }
+        if (allStopped) setAllRacing("initial");
     }, [allStopped, setAllRacing])
 
     return (
@@ -56,7 +57,6 @@ const GarageActions = () => {
                     onClick={cancelRace} />
                 <Button
                     text="Generate"
-                    disabled={allRacing !== "initial"}
                     onClick={generateNewCars} />
             </div>
             <GarageInputs />

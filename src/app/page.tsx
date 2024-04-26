@@ -48,8 +48,9 @@ const Garage = () => {
   useEffect(() => {
     if (allRacing === "cancel") {
       setStoppedCars([]);
+      setLoading(true);
     }
-    if(allRacing === "initial") {
+    if (allRacing === "initial") {
       setLoading(false);
     }
   }, [allRacing, setStoppedCars])
@@ -60,6 +61,7 @@ const Garage = () => {
       allRacing,
       selected,
       allReady,
+      readyCarsCount: readyCars.length,
       setLoading,
       allStopped,
       setReadyCars,

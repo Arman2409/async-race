@@ -21,17 +21,13 @@ const Pagination = (
   const { setWinnerPage, setGaragePage } = useContext(paginationContext);
 
   const changePage = useCallback((direction: "next" | "prev") => {
-    let newPage = 1;
     setCurrent((curr: number) => {
-      newPage = direction === "prev" ? curr -= 1 : curr += 1;
+      const newPage = direction === "prev" ? curr -= 1 : curr += 1;
+      if (type === "garage") setGaragePage(newPage);
+      if (type === "winner") setWinnerPage(newPage);
       return newPage;
     });
-    if (type === "garage") {
-      setGaragePage(newPage);
-      return;
-    }
-    setWinnerPage(newPage);
-  }, [setCurrent])
+  }, [setCurrent, setGaragePage, setWinnerPage])
 
   useEffect(() => {
     setDisabledLeft(current === 1);

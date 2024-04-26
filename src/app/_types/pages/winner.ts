@@ -1,5 +1,7 @@
 import { Car } from "./garage"
 
+export type SortStatus = "desc" | "asc" | "default";
+
 // object types 
 export interface Winner extends Car {
   wins: number

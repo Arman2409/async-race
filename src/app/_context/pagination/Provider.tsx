@@ -12,8 +12,8 @@ const PaginationProvider = ({ children }: ProviderProps) => {
     <paginationContext.Provider value={
       {
         winnerPage,
-        setWinnerPage,
         garagePage,
+        setWinnerPage,
         setGaragePage
       }
       }>
